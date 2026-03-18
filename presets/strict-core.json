@@ -1,0 +1,39 @@
+{
+	"extends": ["./effect-observability.json"],
+	"plugins": ["typescript", "import", "promise", "unicorn", "oxc", "eslint"],
+	"categories": {
+		"correctness": "error",
+		"suspicious": "error",
+		"pedantic": "error",
+		"perf": "error",
+		"style": "error",
+		"restriction": "error",
+		"nursery": "error"
+	},
+	"rules": {
+		"typescript/consistent-type-imports": "error",
+		"typescript/no-misused-promises": "error",
+		"typescript/use-unknown-in-catch-callback-variable": "error",
+		"typescript/no-unsafe-type-assertion": "error",
+		"typescript/no-redundant-type-constituents": "error",
+		"import/no-reexport": "error",
+		"import/no-commonjs": "error",
+		"import/no-amd": "error",
+		"import/no-anonymous-default-export": "error",
+		"promise/no-return-wrap": "error",
+		"eslint/array-callback-return": "error",
+		"eslint/no-useless-return": "error",
+		"eslint/no-await-in-loop": "error",
+		"eslint/no-param-reassign": "error",
+		"eslint/no-empty": "error",
+		"@rikalabs/no-silent-catch-fallback": "error",
+		"@rikalabs/no-runtime-compat-fallbacks": "error",
+		"@rikalabs/no-catch-return-error-object": "error",
+		"@rikalabs/no-unlisted-external-imports": "error",
+		"@rikalabs/no-double-type-assertion": "error",
+		"@rikalabs/no-ai-debt-comments": "error",
+		"@rikalabs/no-json-parse-default-fallback": "error",
+		"@rikalabs/no-json-stringify-default-fallback": "error",
+		"@rikalabs/effect-catch-handler-must-use-error": "error"
+	}
+}

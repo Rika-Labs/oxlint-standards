@@ -1,0 +1,7 @@
+{
+	"extends": ["./effect-error-model.json"],
+	"rules": {
+		"@rikalabs/effect-prefer-gen-over-flatmap-chain": "error",
+		"@rikalabs/effect-no-effect-return-in-map": "error"
+	}
+}

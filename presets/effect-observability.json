@@ -1,0 +1,6 @@
+{
+	"extends": ["./effect-composition.json"],
+	"rules": {
+		"@rikalabs/effect-require-span-name": "error"
+	}
+}

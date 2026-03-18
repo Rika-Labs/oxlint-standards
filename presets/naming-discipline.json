@@ -1,0 +1,9 @@
+{
+	"extends": ["./promise-safety.json"],
+	"rules": {
+		"@rikalabs/no-vague-verbs": "error",
+		"@rikalabs/no-duplicate-context": "error",
+		"@rikalabs/no-is-record-helpers": "error",
+		"@rikalabs/no-as-never": "error"
+	}
+}

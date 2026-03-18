@@ -1,0 +1,32 @@
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"plugins": ["typescript", "import", "promise", "unicorn", "oxc"],
+	"categories": {
+		"correctness": "error",
+		"suspicious": "error",
+		"perf": "error"
+	},
+	"rules": {
+		"typescript/no-explicit-any": "error",
+		"typescript/no-non-null-assertion": "error",
+		"typescript/no-unsafe-assignment": "error",
+		"typescript/no-unsafe-call": "error",
+		"typescript/no-unsafe-member-access": "error",
+		"typescript/no-unsafe-return": "error",
+		"typescript/strict-boolean-expressions": "error",
+		"import/no-cycle": "error",
+		"import/no-self-import": "error",
+		"import/no-duplicates": "error",
+		"promise/no-nesting": "error",
+		"promise/no-return-in-finally": "error",
+		"oxc/no-barrel-file": [
+			"error",
+			{
+				"threshold": 0
+			}
+		],
+		"unicorn/no-abusive-eslint-disable": "error",
+		"unicorn/consistent-function-scoping": "error"
+	},
+	"ignorePatterns": ["dist", "node_modules"]
+}

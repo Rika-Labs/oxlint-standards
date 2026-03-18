@@ -1,0 +1,7 @@
+{
+	"extends": ["./naming-discipline.json"],
+	"rules": {
+		"@rikalabs/effect-no-or-die": "error",
+		"@rikalabs/effect-no-terminal-runners": "error"
+	}
+}

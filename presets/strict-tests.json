@@ -1,0 +1,18 @@
+{
+	"plugins": ["jest", "vitest", "jsdoc"],
+	"rules": {
+		"jest/no-focused-tests": "error",
+		"jest/no-disabled-tests": "error",
+		"jest/prefer-hooks-in-order": "off",
+		"jest/prefer-mock-promise-shorthand": "off",
+		"jest/prefer-each": "off",
+		"jest/prefer-spy-on": "off",
+		"jest/valid-expect": "error",
+		"jest/valid-title": "error",
+		"vitest/no-conditional-tests": "error",
+		"vitest/no-import-node-test": "error",
+		"vitest/prefer-called-once": "error",
+		"jsdoc/check-tag-names": "error",
+		"jsdoc/check-property-names": "error"
+	}
+}

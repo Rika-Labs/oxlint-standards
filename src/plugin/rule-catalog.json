@@ -1,0 +1,102 @@
+[
+	{
+		"id": "@rikalabs/no-vague-verbs",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no rule enforcing mechanical naming and banned vague verbs."
+	},
+	{
+		"id": "@rikalabs/no-duplicate-context",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no rule for duplicate adjacent naming context in identifiers."
+	},
+	{
+		"id": "@rikalabs/no-import-then-reexport",
+		"nearestBuiltIn": "import/no-duplicates",
+		"whyInsufficient": "Built-in duplicate import checks do not forbid import-local-then-export indirection."
+	},
+	{
+		"id": "@rikalabs/no-is-record-helpers",
+		"nearestBuiltIn": "typescript/no-restricted-types",
+		"whyInsufficient": "Built-in restricted type rules cannot ban isRecord helper declarations, calls, and Record-predicate patterns together."
+	},
+	{
+		"id": "@rikalabs/no-silent-catch-fallback",
+		"nearestBuiltIn": "eslint/no-empty",
+		"whyInsufficient": "Built-ins do not forbid catch fallback defaults that silently swallow runtime failures."
+	},
+	{
+		"id": "@rikalabs/no-runtime-compat-fallbacks",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint does not provide a runtime-agnostic rule to ban compat/polyfill fallback patterns in strict mode."
+	},
+	{
+		"id": "@rikalabs/no-catch-return-error-object",
+		"nearestBuiltIn": "eslint/no-useless-catch",
+		"whyInsufficient": "Built-in catch rules do not forbid returning caught errors as values, which silently converts failures into success paths."
+	},
+	{
+		"id": "@rikalabs/no-unlisted-external-imports",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint import rules do not validate package.json dependency declaration consistency for imported packages."
+	},
+	{
+		"id": "@rikalabs/no-double-type-assertion",
+		"nearestBuiltIn": "typescript/no-unnecessary-type-assertion",
+		"whyInsufficient": "Built-ins do not explicitly block chained assertion escapes such as 'as unknown as T'."
+	},
+	{
+		"id": "@rikalabs/no-ai-debt-comments",
+		"nearestBuiltIn": "eslint/no-warning-comments",
+		"whyInsufficient": "Built-ins do not specifically detect self-admitted AI debt comments indicating unverifiable generated code."
+	},
+	{
+		"id": "@rikalabs/no-json-parse-default-fallback",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint does not provide a dedicated rule to ban JSON.parse fallback defaults that hide malformed payloads."
+	},
+	{
+		"id": "@rikalabs/no-json-stringify-default-fallback",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint does not provide a dedicated rule to ban JSON.stringify fallback defaults that hide serialization failures."
+	},
+	{
+		"id": "@rikalabs/no-as-never",
+		"nearestBuiltIn": "typescript/no-unnecessary-type-assertion",
+		"whyInsufficient": "Built-in assertion rules do not specifically ban 'as never' escape hatches."
+	},
+	{
+		"id": "@rikalabs/effect-no-or-die",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no Effect-specific rule for orDie failure conversion."
+	},
+	{
+		"id": "@rikalabs/effect-catch-handler-must-use-error",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no Effect-specific rule requiring catch handler callbacks to preserve and use error context."
+	},
+	{
+		"id": "@rikalabs/effect-no-terminal-runners",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no Effect runtime boundary rule for runPromise/runSync execution."
+	},
+	{
+		"id": "@rikalabs/effect-no-generic-error-fail",
+		"nearestBuiltIn": "typescript/only-throw-error",
+		"whyInsufficient": "Built-in throw rules do not validate Effect.fail argument error specificity."
+	},
+	{
+		"id": "@rikalabs/effect-prefer-gen-over-flatmap-chain",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no Effect composition style rule for long flatMap chains."
+	},
+	{
+		"id": "@rikalabs/effect-no-effect-return-in-map",
+		"nearestBuiltIn": "promise/no-nesting",
+		"whyInsufficient": "Promise nesting checks do not detect returning Effect values from array iterators."
+	},
+	{
+		"id": "@rikalabs/effect-require-span-name",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no span naming convention checks for Effect.fn or Effect.withSpan."
+	}
+]

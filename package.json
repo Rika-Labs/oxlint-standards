@@ -1,0 +1,53 @@
+{
+	"name": "@rikalabs/oxlint-standards",
+	"version": "0.1.0",
+	"description": "Strict Oxlint presets and custom TypeScript + Effect rules",
+	"type": "module",
+	"license": "MIT",
+	"author": "Rika Labs",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Rika-Labs/oxlint-standards.git"
+	},
+	"homepage": "https://github.com/Rika-Labs/oxlint-standards#readme",
+	"keywords": [
+		"oxlint",
+		"effect",
+		"typescript",
+		"lint",
+		"standards"
+	],
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		},
+		"./plugin": {
+			"types": "./dist/plugin/index.d.ts",
+			"default": "./dist/plugin/index.js"
+		},
+		"./presets/*": "./presets/*",
+		"./package.json": "./package.json"
+	},
+	"files": [
+		"dist",
+		"presets",
+		"README.md",
+		"LICENSE"
+	],
+	"scripts": {
+		"build": "bun x tsc -p tsconfig.json",
+		"typecheck": "bun x tsc --noEmit",
+		"lint": "oxlint .",
+		"test": "bun test",
+		"check:builtins": "bun run scripts/check-builtin-overlap.ts",
+		"check": "bun run lint && bun run typecheck && bun test && bun run check:builtins"
+	},
+	"devDependencies": {
+		"@types/bun": "latest",
+		"oxlint": "^1.38.0",
+		"typescript": "^5.9.3"
+	}
+}

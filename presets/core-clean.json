@@ -1,0 +1,25 @@
+{
+	"plugins": ["typescript", "import", "promise", "unicorn", "oxc"],
+	"categories": {
+		"correctness": "error",
+		"suspicious": "error",
+		"perf": "error"
+	},
+	"rules": {
+		"oxc/no-barrel-file": [
+			"error",
+			{
+				"threshold": 0
+			}
+		],
+		"oxc/no-const-enum": "error",
+		"import/no-cycle": "error",
+		"import/no-self-import": "error",
+		"import/no-duplicates": "error",
+		"promise/no-callback-in-promise": "error",
+		"promise/no-return-in-finally": "error",
+		"promise/no-multiple-resolved": "error",
+		"unicorn/no-abusive-eslint-disable": "error",
+		"unicorn/consistent-function-scoping": "error"
+	}
+}

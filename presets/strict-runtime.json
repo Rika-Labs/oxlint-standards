@@ -1,0 +1,9 @@
+{
+	"plugins": ["node"],
+	"rules": {
+		"node/no-process-env": "error",
+		"node/no-new-require": "error",
+		"node/no-path-concat": "error",
+		"node/no-exports-assign": "error"
+	}
+}

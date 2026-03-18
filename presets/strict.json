@@ -1,0 +1,8 @@
+{
+	"extends": [
+		"./strict-core.json",
+		"./strict-runtime.json",
+		"./strict-web.json",
+		"./strict-tests.json"
+	]
+}

@@ -1,0 +1,8 @@
+{
+	"extends": ["./effect-runtime.json"],
+	"rules": {
+		"typescript/only-throw-error": "error",
+		"eslint/no-throw-literal": "error",
+		"@rikalabs/effect-no-generic-error-fail": "error"
+	}
+}
