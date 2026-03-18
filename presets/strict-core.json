@@ -1,5 +1,5 @@
 {
-	"extends": ["./effect-observability.json"],
+	"extends": ["./naming-discipline.json"],
 	"plugins": ["typescript", "import", "promise", "unicorn", "oxc", "eslint"],
 	"categories": {
 		"correctness": "error",
@@ -33,7 +33,6 @@
 		"@rikalabs/no-double-type-assertion": "error",
 		"@rikalabs/no-ai-debt-comments": "error",
 		"@rikalabs/no-json-parse-default-fallback": "error",
-		"@rikalabs/no-json-stringify-default-fallback": "error",
-		"@rikalabs/effect-catch-handler-must-use-error": "error"
+		"@rikalabs/no-json-stringify-default-fallback": "error"
 	}
 }

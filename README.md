@@ -1,6 +1,6 @@
 # @rikalabs/oxlint-standards
 
-Strict, opinionated Oxlint defaults for TypeScript + Effect projects.
+Strict, opinionated Oxlint defaults for TypeScript projects, with opt-in packs for framework-specific standards.
 
 This package ships two things:
 
@@ -31,6 +31,22 @@ bun add -d @rikalabs/oxlint-standards oxlint
 
 `jsPlugins` must be declared by the consuming project because Oxlint currently only merges `rules`, `plugins`, and `overrides` through `extends`.
 
+## Preset strategy
+
+- `strict` is the default baseline for TypeScript + custom agent-focused standards.
+- `strict` intentionally excludes framework-specific packs.
+- Framework/domain packs are opt-in via extra presets layered in `extends`.
+
+Example (opt into Effect rules):
+
+```json
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"extends": ["./node_modules/@rikalabs/oxlint-standards/presets/strict-effect.json"],
+	"jsPlugins": ["@rikalabs/oxlint-standards/plugin"]
+}
+```
+
 ## Presets
 
 1. `core-clean`
@@ -46,11 +62,14 @@ bun add -d @rikalabs/oxlint-standards oxlint
 11. `strict-runtime`
 12. `strict-web`
 13. `strict-tests`
-14. `strict`
+14. `strict-effect` (opt-in pack)
+15. `strict`
 
 Also available: `recommended` (currently an alias of `strict`).
 
 ## Custom rules
+
+Default strict custom rules:
 
 - `@rikalabs/no-vague-verbs`
 - `@rikalabs/no-duplicate-context`
@@ -65,6 +84,9 @@ Also available: `recommended` (currently an alias of `strict`).
 - `@rikalabs/no-json-parse-default-fallback`
 - `@rikalabs/no-json-stringify-default-fallback`
 - `@rikalabs/no-as-never`
+
+Opt-in Effect rules:
+
 - `@rikalabs/effect-no-or-die`
 - `@rikalabs/effect-catch-handler-must-use-error`
 - `@rikalabs/effect-no-terminal-runners`
@@ -92,5 +114,3 @@ bun run check:builtins
 bun install
 bun run check
 ```
-
-# oxlint-standards

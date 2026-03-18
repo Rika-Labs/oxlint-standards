@@ -1,7 +1,7 @@
 {
 	"name": "@rikalabs/oxlint-standards",
 	"version": "0.1.0",
-	"description": "Strict Oxlint presets and custom TypeScript + Effect rules",
+	"description": "Strict Oxlint presets and custom TypeScript-first rules with opt-in packs",
 	"type": "module",
 	"license": "MIT",
 	"author": "Rika Labs",
@@ -12,10 +12,10 @@
 	"homepage": "https://github.com/Rika-Labs/oxlint-standards#readme",
 	"keywords": [
 		"oxlint",
-		"effect",
 		"typescript",
 		"lint",
-		"standards"
+		"standards",
+		"effect"
 	],
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",

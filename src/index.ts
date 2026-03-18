@@ -14,6 +14,7 @@ export const presetNames = [
 	"strict-runtime",
 	"strict-web",
 	"strict-tests",
+	"strict-effect",
 	"strict",
 	"recommended",
 ] as const;
