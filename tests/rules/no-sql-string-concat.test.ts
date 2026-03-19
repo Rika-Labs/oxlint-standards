@@ -49,4 +49,27 @@ describe("no-sql-string-concat", () => {
 
 		expect(reports).toHaveLength(0);
 	});
+
+	it("ignores static parameterized SQL strings", () => {
+		const { context, reports } = createTestContext();
+		const visitor = noSqlStringConcatRule.create(context);
+
+		visitor.CallExpression?.(
+			asNode({
+				type: "CallExpression",
+				callee: asNode({
+					type: "MemberExpression",
+					object: asNode({ type: "Identifier", name: "db" }),
+					property: asNode({ type: "Identifier", name: "query" }),
+					computed: false,
+				}),
+				arguments: [
+					asNode({ type: "Literal", value: "select * from users where id = ?" }),
+					asNode({ type: "ArrayExpression", elements: [asNode({ type: "Identifier", name: "id" })] }),
+				],
+			}),
+		);
+
+		expect(reports).toHaveLength(0);
+	});
 });

@@ -1,6 +1,7 @@
 import type { RuleModule } from "../types.js";
 
-const DEBUG_FILENAME_PATTERN = /(?:^|\/)[^/]*(?:_old|_backup|temp|v2)[^/]*\.[^/]+$/i;
+const DEBUG_FILENAME_PATTERN =
+	/(?:^|\/)[^/]*(?:_old|_backup|_temp|_v2|\.bak|\.old|\.backup)(?:\.[^/]+)?$/i;
 
 export const noDebugResidueFilenamesRule: RuleModule = {
 	meta: {

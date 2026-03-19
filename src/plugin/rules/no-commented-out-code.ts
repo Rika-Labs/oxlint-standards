@@ -2,7 +2,7 @@ import type { RuleModule } from "../types.js";
 import { getCommentText, isFixtureOrDocsFile, isTestFilename, toNodeArray } from "../utils.js";
 
 const COMMENTED_OUT_CODE_PATTERN =
-	/^\s*(const|let|var|if|for|while|switch|return|import|export|class|function)\b.*[;{}=()]?/m;
+	/^\s*(?:const|let|var)\s+[A-Za-z_$][\w$]*\s*=|^\s*return\s+[^/].*;?\s*$|^\s*import\s+.+\s+from\s+['"]|^\s*export\s+(?:const|function|class|type|interface)\b|^\s*(?:if|for|while|switch)\s*\(|^\s*class\s+[A-Za-z_$][\w$]*\s*\{|^\s*function\s+[A-Za-z_$][\w$]*\s*\(/m;
 
 export const noCommentedOutCodeRule: RuleModule = {
 	meta: {

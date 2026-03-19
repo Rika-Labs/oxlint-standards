@@ -3,9 +3,41 @@ import {
 	getNode,
 	isDefaultFallbackNode,
 	isPropertyAccessLike,
+	serializeAstForComparison,
 	toNode,
 	unwrapChainExpression,
 } from "../utils.js";
+
+const hasMatchingPropertyGuard = (test: AstNode | null, propertyNode: AstNode): boolean => {
+	if (!test) return false;
+
+	const propertyShape = serializeAstForComparison(unwrapChainExpression(propertyNode));
+	if (propertyShape.length === 0) return false;
+
+	const current = unwrapChainExpression(test);
+	if (!current) return false;
+	if (serializeAstForComparison(current) === propertyShape) return true;
+
+	if (current.type === "UnaryExpression") {
+		return hasMatchingPropertyGuard(toNode(current.argument), propertyNode);
+	}
+
+	if (current.type === "LogicalExpression") {
+		return (
+			hasMatchingPropertyGuard(toNode(current.left), propertyNode) ||
+			hasMatchingPropertyGuard(toNode(current.right), propertyNode)
+		);
+	}
+
+	if (current.type === "BinaryExpression") {
+		return (
+			serializeAstForComparison(unwrapChainExpression(current.left)) === propertyShape ||
+			serializeAstForComparison(unwrapChainExpression(current.right)) === propertyShape
+		);
+	}
+
+	return false;
+};
 
 const isPropertyFallback = (node: AstNode): boolean => {
 	if (node.type === "LogicalExpression" && (node.operator === "||" || node.operator === "??")) {
@@ -19,9 +51,11 @@ const isPropertyFallback = (node: AstNode): boolean => {
 
 	return (
 		isPropertyAccessLike(consequent) &&
-		isDefaultFallbackNode(alternate) ||
+		isDefaultFallbackNode(alternate) &&
+		hasMatchingPropertyGuard(toNode(node.test), consequent) ||
 		isPropertyAccessLike(alternate) &&
-		isDefaultFallbackNode(consequent)
+		isDefaultFallbackNode(consequent) &&
+		hasMatchingPropertyGuard(toNode(node.test), alternate)
 	);
 };
 

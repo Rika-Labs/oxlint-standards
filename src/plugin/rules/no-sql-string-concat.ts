@@ -4,19 +4,26 @@ import { getIdentifierName, getNodeArray, toNode } from "../utils.js";
 const SQL_METHOD_NAMES = new Set(["query", "execute", "raw"]);
 const SQL_KEYWORD_PATTERN = /^\s*(select|insert|update|delete|with)\b/i;
 
-const isSqlLikeArgument = (node: ReturnType<typeof toNode>): boolean => {
+const hasSqlKeyword = (node: ReturnType<typeof toNode>): boolean => {
 	if (!node) return false;
-	if (node.type === "BinaryExpression") {
-		return node.operator === "+" && (isSqlLikeArgument(toNode(node.left)) || isSqlLikeArgument(toNode(node.right)));
-	}
 	if (node.type === "TemplateLiteral") {
 		const expressions = Array.isArray(node.expressions) ? node.expressions : [];
 		const quasis = Array.isArray(node.quasis) ? node.quasis : [];
 		return expressions.length > 0 && quasis.some((quasi) =>
 			SQL_KEYWORD_PATTERN.test(String((quasi as { value?: { cooked?: string } }).value?.cooked ?? "")));
 	}
-	if (node.type !== "Literal") return false;
-	return typeof node.value === "string" && SQL_KEYWORD_PATTERN.test(node.value);
+	return node.type === "Literal" && typeof node.value === "string" && SQL_KEYWORD_PATTERN.test(node.value);
+};
+
+const isSqlLikeArgument = (node: ReturnType<typeof toNode>): boolean => {
+	if (!node) return false;
+	if (node.type === "BinaryExpression") {
+		return node.operator === "+" && (hasSqlKeyword(toNode(node.left)) || hasSqlKeyword(toNode(node.right)));
+	}
+	if (node.type === "TemplateLiteral") {
+		return hasSqlKeyword(node);
+	}
+	return false;
 };
 
 export const noSqlStringConcatRule: RuleModule = {

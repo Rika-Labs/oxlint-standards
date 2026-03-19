@@ -20,4 +20,17 @@ describe("no-debug-residue-filenames", () => {
 
 		expect(reports).toHaveLength(0);
 	});
+
+	it("ignores filenames that merely contain temp or v2 as substrings", () => {
+		const { context: templateContext, reports: templateReports } = createTestContext("src/template.ts");
+		const templateVisitor = noDebugResidueFilenamesRule.create(templateContext);
+		templateVisitor.Program?.(asNode({ type: "Program" }));
+
+		const { context: versionContext, reports: versionReports } = createTestContext("src/api-v2.ts");
+		const versionVisitor = noDebugResidueFilenamesRule.create(versionContext);
+		versionVisitor.Program?.(asNode({ type: "Program" }));
+
+		expect(templateReports).toHaveLength(0);
+		expect(versionReports).toHaveLength(0);
+	});
 });

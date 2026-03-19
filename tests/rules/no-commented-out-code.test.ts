@@ -30,4 +30,18 @@ describe("no-commented-out-code", () => {
 
 		expect(reports).toHaveLength(0);
 	});
+
+	it("ignores prose that starts with control-flow words", () => {
+		const { context, reports } = createTestContext("src/service.ts");
+		const visitor = noCommentedOutCodeRule.create(context);
+
+		visitor.Program?.(
+			asNode({
+				type: "Program",
+				comments: [asNode({ type: "Line", value: "if auth fails, redirect to login" })],
+			}),
+		);
+
+		expect(reports).toHaveLength(0);
+	});
 });
