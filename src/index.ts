@@ -12,6 +12,7 @@ export const presetNames = [
 	"effect-observability",
 	"strict-core",
 	"strict-runtime",
+	"strict-drizzle",
 	"strict-web",
 	"strict-tests",
 	"strict-effect",

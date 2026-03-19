@@ -2,6 +2,9 @@
 	"plugins": ["react", "react-perf", "jsx-a11y", "nextjs"],
 	"rules": {
 		"react/button-has-type": "error",
+		"react/exhaustive-deps": "error",
+		"react/jsx-key": "error",
+		"react/jsx-no-constructed-context-values": "error",
 		"react/jsx-no-script-url": "error",
 		"react/jsx-no-target-blank": "error",
 		"react/no-danger-with-children": "error",
@@ -13,9 +16,25 @@
 		"jsx-a11y/anchor-is-valid": "error",
 		"jsx-a11y/no-autofocus": "error",
 		"jsx-a11y/no-aria-hidden-on-focusable": "error",
+		"nextjs/google-font-display": "error",
+		"nextjs/google-font-preconnect": "error",
+		"nextjs/inline-script-id": "error",
+		"nextjs/no-css-tags": "error",
+		"nextjs/no-duplicate-head": "error",
 		"nextjs/no-img-element": "error",
 		"nextjs/no-async-client-component": "error",
 		"nextjs/no-document-import-in-page": "error",
-		"nextjs/no-head-element": "error"
+		"nextjs/no-head-import-in-document": "error",
+		"nextjs/no-head-element": "error",
+		"nextjs/no-html-link-for-pages": "error",
+		"nextjs/no-script-component-in-head": "error",
+		"nextjs/no-styled-jsx-in-document": "error",
+		"nextjs/no-sync-scripts": "error",
+		"nextjs/no-title-in-document-head": "error",
+		"nextjs/no-unwanted-polyfillio": "error",
+		"@rikalabs/next-no-browser-api-in-server-component": "error",
+		"@rikalabs/next-require-server-directive-in-actions": "error",
+		"@rikalabs/next-no-use-client-in-root-files": "error",
+		"@rikalabs/next-no-pages-router-api-in-app-dir": "error"
 	}
 }

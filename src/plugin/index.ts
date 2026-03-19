@@ -4,12 +4,29 @@ import { noDoubleTypeAssertionRule } from "./rules/no-double-type-assertion.js";
 import { noJsonParseDefaultFallbackRule } from "./rules/no-json-parse-default-fallback.js";
 import { noJsonStringifyDefaultFallbackRule } from "./rules/no-json-stringify-default-fallback.js";
 import { effectCatchHandlerMustUseErrorRule } from "./rules/effect-catch-handler-must-use-error.js";
+import { drizzleEnforceDeleteWithWhereRule } from "./rules/drizzle-enforce-delete-with-where.js";
+import { drizzleEnforceUpdateWithWhereRule } from "./rules/drizzle-enforce-update-with-where.js";
+import { drizzleNoDriverQueryInDomainRule } from "./rules/drizzle-no-driver-query-in-domain.js";
+import { drizzleNoQueryInLoopsRule } from "./rules/drizzle-no-query-in-loops.js";
+import { drizzleNoRawSqlCrudRule } from "./rules/drizzle-no-raw-sql-crud.js";
+import { drizzleNoUnboundedSelectRule } from "./rules/drizzle-no-unbounded-select.js";
+import { drizzleRequireInferTypesRule } from "./rules/drizzle-require-infer-types.js";
+import { drizzleRequireReferencesCallbackRule } from "./rules/drizzle-require-references-callback.js";
+import { drizzleRequireTransactionScopeRule } from "./rules/drizzle-require-transaction-scope.js";
+import { effectNoAsyncAwaitRule } from "./rules/effect-no-async-await.js";
 import { effectNoEffectReturnInMapRule } from "./rules/effect-no-effect-return-in-map.js";
+import { effectNoLoopedEffectsRule } from "./rules/effect-no-looped-effects.js";
 import { effectNoGenericErrorFailRule } from "./rules/effect-no-generic-error-fail.js";
 import { effectNoOrDieRule } from "./rules/effect-no-or-die.js";
+import { effectNoRawPromisesRule } from "./rules/effect-no-raw-promises.js";
 import { effectNoTerminalRunnersRule } from "./rules/effect-no-terminal-runners.js";
+import { effectNoTryCatchRule } from "./rules/effect-no-try-catch.js";
 import { effectPreferGenOverFlatmapChainRule } from "./rules/effect-prefer-gen-over-flatmap-chain.js";
 import { effectRequireSpanNameRule } from "./rules/effect-require-span-name.js";
+import { nextNoBrowserApiInServerComponentRule } from "./rules/next-no-browser-api-in-server-component.js";
+import { nextNoPagesRouterApiInAppDirRule } from "./rules/next-no-pages-router-api-in-app-dir.js";
+import { nextNoUseClientInRootFilesRule } from "./rules/next-no-use-client-in-root-files.js";
+import { nextRequireServerDirectiveInActionsRule } from "./rules/next-require-server-directive-in-actions.js";
 import { noAsNeverRule } from "./rules/no-as-never.js";
 import { noDuplicateContextRule } from "./rules/no-duplicate-context.js";
 import { noImportThenReexportRule } from "./rules/no-import-then-reexport.js";
@@ -59,12 +76,25 @@ export const customRules: Readonly<Record<string, RuleModule>> = {
 	"no-json-parse-default-fallback": noJsonParseDefaultFallbackRule,
 	"no-json-stringify-default-fallback": noJsonStringifyDefaultFallbackRule,
 	"no-as-never": noAsNeverRule,
+	"drizzle-enforce-delete-with-where": drizzleEnforceDeleteWithWhereRule,
+	"drizzle-enforce-update-with-where": drizzleEnforceUpdateWithWhereRule,
+	"drizzle-no-unbounded-select": drizzleNoUnboundedSelectRule,
+	"drizzle-no-raw-sql-crud": drizzleNoRawSqlCrudRule,
+	"drizzle-require-transaction-scope": drizzleRequireTransactionScopeRule,
+	"drizzle-require-infer-types": drizzleRequireInferTypesRule,
+	"drizzle-require-references-callback": drizzleRequireReferencesCallbackRule,
+	"drizzle-no-driver-query-in-domain": drizzleNoDriverQueryInDomainRule,
+	"drizzle-no-query-in-loops": drizzleNoQueryInLoopsRule,
 	"effect-no-or-die": effectNoOrDieRule,
 	"effect-catch-handler-must-use-error": effectCatchHandlerMustUseErrorRule,
 	"effect-no-terminal-runners": effectNoTerminalRunnersRule,
+	"effect-no-raw-promises": effectNoRawPromisesRule,
+	"effect-no-try-catch": effectNoTryCatchRule,
+	"effect-no-async-await": effectNoAsyncAwaitRule,
 	"effect-no-generic-error-fail": effectNoGenericErrorFailRule,
 	"effect-prefer-gen-over-flatmap-chain": effectPreferGenOverFlatmapChainRule,
 	"effect-no-effect-return-in-map": effectNoEffectReturnInMapRule,
+	"effect-no-looped-effects": effectNoLoopedEffectsRule,
 	"effect-require-span-name": effectRequireSpanNameRule,
 	"no-todo-without-issue": noTodoWithoutIssueRule,
 	"no-disable-without-rationale": noDisableWithoutRationaleRule,
@@ -91,6 +121,10 @@ export const customRules: Readonly<Record<string, RuleModule>> = {
 	"no-relative-cross-package-imports": noRelativeCrossPackageImportsRule,
 	"no-cross-layer-imports": noCrossLayerImportsRule,
 	"no-copy-paste-exports": noCopyPasteExportsRule,
+	"next-no-browser-api-in-server-component": nextNoBrowserApiInServerComponentRule,
+	"next-require-server-directive-in-actions": nextRequireServerDirectiveInActionsRule,
+	"next-no-use-client-in-root-files": nextNoUseClientInRootFilesRule,
+	"next-no-pages-router-api-in-app-dir": nextNoPagesRouterApiInAppDirRule,
 };
 
 const plugin = {

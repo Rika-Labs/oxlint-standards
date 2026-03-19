@@ -1,0 +1,32 @@
+{
+	"extends": ["./promise-safety.json"],
+	"rules": {
+		"typescript/no-explicit-any": "error",
+		"typescript/prefer-nullish-coalescing": "error",
+		"eslint/prefer-const": "error",
+		"unicorn/no-array-reduce": "error",
+		"@rikalabs/drizzle-enforce-delete-with-where": "error",
+		"@rikalabs/drizzle-enforce-update-with-where": "error",
+		"@rikalabs/drizzle-no-unbounded-select": "error",
+		"@rikalabs/drizzle-no-raw-sql-crud": "error",
+		"@rikalabs/drizzle-require-transaction-scope": "error",
+		"@rikalabs/drizzle-require-infer-types": "error",
+		"@rikalabs/drizzle-require-references-callback": "error",
+		"@rikalabs/drizzle-no-driver-query-in-domain": "error",
+		"@rikalabs/drizzle-no-query-in-loops": "error"
+	},
+	"overrides": [
+		{
+			"files": [
+				"**/*repo*.ts",
+				"**/*service*.ts",
+				"**/*schema*.ts",
+				"**/db/**/*.ts",
+				"**/drizzle/**/*.ts"
+			],
+			"rules": {
+				"eslint/no-console": "error"
+			}
+		}
+	]
+}

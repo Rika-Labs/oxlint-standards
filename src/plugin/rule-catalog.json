@@ -65,6 +65,51 @@
 		"whyInsufficient": "Built-in assertion rules do not specifically ban 'as never' escape hatches."
 	},
 	{
+		"id": "@rikalabs/drizzle-enforce-delete-with-where",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no Drizzle-aware rule requiring .where() on delete() builders."
+	},
+	{
+		"id": "@rikalabs/drizzle-enforce-update-with-where",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no Drizzle-aware rule requiring .where() on update() builders."
+	},
+	{
+		"id": "@rikalabs/drizzle-no-unbounded-select",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no ORM-specific rule for catching bare select().from(...) patterns that over-fetch without a where clause."
+	},
+	{
+		"id": "@rikalabs/drizzle-no-raw-sql-crud",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Built-in SQL or template rules do not distinguish raw Drizzle sql`...` CRUD statements from allowed query-builder usage."
+	},
+	{
+		"id": "@rikalabs/drizzle-require-transaction-scope",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no Drizzle workflow rule for grouping multi-write operations inside transactions."
+	},
+	{
+		"id": "@rikalabs/drizzle-require-infer-types",
+		"nearestBuiltIn": "typescript/no-restricted-types",
+		"whyInsufficient": "Built-in type restriction rules do not recognize Drizzle $inferSelect/$inferInsert conventions in exported schema model types."
+	},
+	{
+		"id": "@rikalabs/drizzle-require-references-callback",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no Drizzle schema rule for enforcing lazy references(() => table.id) callbacks."
+	},
+	{
+		"id": "@rikalabs/drizzle-no-driver-query-in-domain",
+		"nearestBuiltIn": "eslint/no-restricted-imports",
+		"whyInsufficient": "Import restrictions cannot catch direct driver query() calls once low-level clients are already in scope."
+	},
+	{
+		"id": "@rikalabs/drizzle-no-query-in-loops",
+		"nearestBuiltIn": "eslint/no-await-in-loop",
+		"whyInsufficient": "Await-in-loop checks do not catch synchronous-looking Drizzle query builders executed inside imperative loops."
+	},
+	{
 		"id": "@rikalabs/effect-no-or-die",
 		"nearestBuiltIn": "none",
 		"whyInsufficient": "Oxlint has no Effect-specific rule for orDie failure conversion."
@@ -80,6 +125,21 @@
 		"whyInsufficient": "Oxlint has no Effect runtime boundary rule for runPromise/runSync execution."
 	},
 	{
+		"id": "@rikalabs/effect-no-raw-promises",
+		"nearestBuiltIn": "unicorn/no-thenable",
+		"whyInsufficient": "Built-in thenable rules do not forbid new Promise construction and Promise method chains specifically inside Effect modules."
+	},
+	{
+		"id": "@rikalabs/effect-no-try-catch",
+		"nearestBuiltIn": "eslint/no-useless-catch",
+		"whyInsufficient": "Built-in catch rules do not ban raw try/catch as a control-flow style inside Effect code."
+	},
+	{
+		"id": "@rikalabs/effect-no-async-await",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no Effect-focused rule for preferring Effect.gen and combinators over async/await."
+	},
+	{
 		"id": "@rikalabs/effect-no-generic-error-fail",
 		"nearestBuiltIn": "typescript/only-throw-error",
 		"whyInsufficient": "Built-in throw rules do not validate Effect.fail argument error specificity."
@@ -93,6 +153,11 @@
 		"id": "@rikalabs/effect-no-effect-return-in-map",
 		"nearestBuiltIn": "promise/no-nesting",
 		"whyInsufficient": "Promise nesting checks do not detect returning Effect values from array iterators."
+	},
+	{
+		"id": "@rikalabs/effect-no-looped-effects",
+		"nearestBuiltIn": "eslint/no-await-in-loop",
+		"whyInsufficient": "Loop rules do not detect Effect combinators executed inside imperative loops."
 	},
 	{
 		"id": "@rikalabs/effect-require-span-name",
@@ -223,5 +288,25 @@
 		"id": "@rikalabs/no-copy-paste-exports",
 		"nearestBuiltIn": "none",
 		"whyInsufficient": "Oxlint has no rule for detecting near-identical exported function bodies."
+	},
+	{
+		"id": "@rikalabs/next-no-browser-api-in-server-component",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Built-in Next.js rules do not ban browser globals in server components based on App Router file boundaries."
+	},
+	{
+		"id": "@rikalabs/next-require-server-directive-in-actions",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no App Router action rule for requiring a top-level 'use server' directive."
+	},
+	{
+		"id": "@rikalabs/next-no-use-client-in-root-files",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Built-in Next.js rules do not restrict 'use client' placement specifically in root page/layout files."
+	},
+	{
+		"id": "@rikalabs/next-no-pages-router-api-in-app-dir",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Built-in Next.js rules do not comprehensively ban Pages Router exports and next/router imports within app/ directories."
 	}
 ]

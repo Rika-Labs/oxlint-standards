@@ -6,7 +6,17 @@ import {
 	toNode,
 } from "../utils.js";
 
-const TERMINAL_RUNNERS = new Set(["runPromise", "runSync", "runFork", "runCallback"]);
+const TERMINAL_RUNNERS = new Set([
+	"runPromise",
+	"runPromiseExit",
+	"runSync",
+	"runSyncExit",
+	"runFork",
+	"runCallback",
+	"unsafeRunPromise",
+	"unsafeRunSync",
+	"unwrap",
+]);
 const ENTRYPOINT_FILE_PATTERN = /(?:^|\/)(?:main|index|cli|bin|server)\.[cm]?[jt]sx?$/;
 
 export const effectNoTerminalRunnersRule: RuleModule = {
