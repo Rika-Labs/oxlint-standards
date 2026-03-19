@@ -30,6 +30,13 @@ describe("effect-no-provide-in-domain", () => {
 		expect(Object.keys(visitor)).toHaveLength(0);
 	});
 
+	it("does not report Effect.provide in composition root directory", () => {
+		const { context } = createTestContext("src/providers/http.ts");
+		const visitor = effectNoProvideInDomainRule.create(context);
+
+		expect(Object.keys(visitor)).toHaveLength(0);
+	});
+
 	it("does not report Effect.provide in test file", () => {
 		const { context } = createTestContext("src/example.test.ts");
 		const visitor = effectNoProvideInDomainRule.create(context);

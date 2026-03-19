@@ -4,6 +4,8 @@ import { getString, toNode, toNodeArray } from "../utils.js";
 const DIRECTIVE_PATTERN =
 	/\b(oxlint-disable|eslint-disable|@ts-ignore|@ts-expect-error)\b/;
 const TICKET_PATTERN = /[A-Z]{2,}-\d+/;
+const DIRECTIVE_SUFFIX_PATTERN = /^-(?:next-)?line$/;
+const RULE_NAME_PATTERN = /^[@a-z][\w/-]*[-/][\w/-]*$/;
 const MIN_RATIONALE_WORDS = 4;
 
 const getCommentText = (value: unknown): string => {
@@ -46,8 +48,18 @@ export const noDisableWithoutRationaleRule: RuleModule = {
 
 					if (TICKET_PATTERN.test(afterDirective)) continue;
 
-					const words = afterDirective.trim().split(/\s+/).filter((w) => w.length > 0);
-					if (words.length >= MIN_RATIONALE_WORDS) continue;
+					// Extract rationale: text after "--" separator, or all text with
+					// directive suffixes and rule names filtered out
+					const dashSplit = afterDirective.split("--");
+					const rationaleText = dashSplit.length > 1
+						? dashSplit.slice(1).join("--")
+						: afterDirective;
+					const rationaleWords = rationaleText
+						.trim()
+						.split(/\s+/)
+						.filter((w) => w.length > 0)
+						.filter((w) => !RULE_NAME_PATTERN.test(w) && !DIRECTIVE_SUFFIX_PATTERN.test(w));
+					if (rationaleWords.length >= MIN_RATIONALE_WORDS) continue;
 
 					context.report({
 						node: comment,

@@ -1,5 +1,12 @@
-import type { RuleModule } from "../types.js";
+import type { AstNode, RuleModule } from "../types.js";
 import { getIdentifierName, getMemberPropertyName, getNodeArray, getNode, toNode } from "../utils.js";
+
+const hasEffectForkLastArg = (callExpr: AstNode): boolean => {
+	const args = getNodeArray(callExpr, "arguments");
+	const lastArg = args.length > 0 ? toNode(args[args.length - 1]) : null;
+	if (!lastArg || lastArg.type !== "MemberExpression") return false;
+	return getIdentifierName(lastArg.object) === "Effect" && getMemberPropertyName(lastArg) === "fork";
+};
 
 export const effectNoFireAndForgetForkRule: RuleModule = {
 	meta: {
@@ -22,6 +29,7 @@ export const effectNoFireAndForgetForkRule: RuleModule = {
 				const callee = toNode(expr.callee);
 				if (!callee) return;
 
+				// Direct: Effect.fork(task)
 				if (callee.type === "MemberExpression") {
 					const objName = getIdentifierName(callee.object);
 					const propName = getMemberPropertyName(callee);
@@ -31,17 +39,19 @@ export const effectNoFireAndForgetForkRule: RuleModule = {
 						return;
 					}
 
+					// Method-chain: task.pipe(Effect.fork)
 					if (propName === "pipe") {
-						const args = getNodeArray(expr, "arguments");
-						const lastArg = args[args.length - 1];
-						if (!lastArg) return;
-						const lastArgNode = toNode(lastArg);
-						if (!lastArgNode || lastArgNode.type !== "MemberExpression") return;
-						const lastObjName = getIdentifierName(lastArgNode.object);
-						const lastPropName = getMemberPropertyName(lastArgNode);
-						if (lastObjName === "Effect" && lastPropName === "fork") {
+						if (hasEffectForkLastArg(expr)) {
 							context.report({ node, messageId: "fireAndForget" });
 						}
+						return;
+					}
+				}
+
+				// Free function: pipe(task, Effect.fork)
+				if (callee.type === "Identifier" && getIdentifierName(callee) === "pipe") {
+					if (hasEffectForkLastArg(expr)) {
+						context.report({ node, messageId: "fireAndForget" });
 					}
 				}
 			},

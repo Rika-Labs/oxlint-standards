@@ -62,6 +62,26 @@ describe("no-disable-without-rationale", () => {
 		expect(reports[0]?.messageId).toBe("missingRationale");
 	});
 
+	it("reports eslint-disable with only rule names as words", () => {
+		const { context, reports } = createTestContext("src/example.ts");
+		const visitor = noDisableWithoutRationaleRule.create(context);
+
+		visitor.Program?.(
+			asNode({
+				type: "Program",
+				comments: [
+					asNode({
+						type: "Line",
+						value: " eslint-disable-next-line no-console no-alert no-debugger",
+					}),
+				],
+			}),
+		);
+
+		expect(reports).toHaveLength(1);
+		expect(reports[0]?.messageId).toBe("missingRationale");
+	});
+
 	it("does not report oxlint-disable with a valid long rationale", () => {
 		const { context, reports } = createTestContext("src/example.ts");
 		const visitor = noDisableWithoutRationaleRule.create(context);

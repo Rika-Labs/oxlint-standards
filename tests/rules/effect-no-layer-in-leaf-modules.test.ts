@@ -30,6 +30,13 @@ describe("effect-no-layer-in-leaf-modules", () => {
 		expect(Object.keys(visitor)).toHaveLength(0);
 	});
 
+	it("does not report Layer.succeed in composition root directory", () => {
+		const { context } = createTestContext("src/layers/db.ts");
+		const visitor = effectNoLayerInLeafModulesRule.create(context);
+
+		expect(Object.keys(visitor)).toHaveLength(0);
+	});
+
 	it("does not report Layer.succeed in test file", () => {
 		const { context } = createTestContext("src/example.test.ts");
 		const visitor = effectNoLayerInLeafModulesRule.create(context);

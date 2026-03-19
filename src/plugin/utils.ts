@@ -147,7 +147,7 @@ export const isFixtureOrDocsFile = (filename: string | undefined): boolean =>
 	typeof filename === "string" && FIXTURE_OR_DOCS_PATTERN.test(filename);
 
 const COMPOSITION_ROOT_PATTERN =
-	/(?:^|\/)(?:layers?|composition|bootstrap|wire|di|providers?)\.[cm]?[jt]sx?$/;
+	/(?:^|\/)(?:layers?|composition|bootstrap|wire|di|providers?)(?:\.[cm]?[jt]sx?$|\/)/;
 
 export const isCompositionRootFile = (filename: string | undefined): boolean =>
 	typeof filename === "string" && COMPOSITION_ROOT_PATTERN.test(filename);

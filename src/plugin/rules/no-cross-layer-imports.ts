@@ -7,6 +7,12 @@ import {
 	isLayerViolation,
 } from "../utils.js";
 
+const isRelativeImport = (source: string): boolean =>
+	source.startsWith("./") || source.startsWith("../");
+
+const isAliasedImport = (source: string): boolean =>
+	source.startsWith("@/") || source.startsWith("~/") || source.startsWith("#");
+
 export const noCrossLayerImportsRule: RuleModule = {
 	meta: {
 		type: "problem",
@@ -30,14 +36,20 @@ export const noCrossLayerImportsRule: RuleModule = {
 			ImportDeclaration(node) {
 				const source = getLiteralString(node.source);
 				if (!source) return;
-				if (!source.startsWith("./") && !source.startsWith("../")) return;
-				if (!filename) return;
 
-				const resolvedPath = resolve(
-					dirname(filename),
-					source,
-				);
-				const toLayer = getArchitecturalLayer(resolvedPath);
+				let targetPath: string | null = null;
+
+				if (isRelativeImport(source) && filename) {
+					targetPath = resolve(dirname(filename), source);
+				} else if (isAliasedImport(source)) {
+					// For aliased imports like @/ui/Button, ~/domain/user, #infra/db
+					// check the layer directly from the import path segments
+					targetPath = source;
+				}
+
+				if (!targetPath) return;
+
+				const toLayer = getArchitecturalLayer(targetPath);
 				if (!toLayer) return;
 
 				if (isLayerViolation(fromLayer, toLayer)) {
