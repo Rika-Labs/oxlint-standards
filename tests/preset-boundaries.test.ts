@@ -50,26 +50,31 @@ const readPresetGraph = (entryPresetName: string): PresetGraph => {
 
 const hasEffectRule = (ruleName: string): boolean => ruleName.startsWith("@rikalabs/effect-");
 const hasEffectPreset = (presetName: string): boolean => presetName.startsWith("effect-");
+const hasDrizzleRule = (ruleName: string): boolean => ruleName.startsWith("@rikalabs/drizzle-");
 
 describe("preset boundaries", () => {
-	it("keeps strict free of effect packs and effect rules", () => {
+	it("includes drizzle and effect standards in strict", () => {
 		const strictGraph = readPresetGraph("strict");
 
-		expect([...strictGraph.presetNames].some(hasEffectPreset)).toBe(false);
-		expect([...strictGraph.ruleNames].some(hasEffectRule)).toBe(false);
+		expect(strictGraph.presetNames.has("strict-drizzle")).toBe(true);
+		expect([...strictGraph.presetNames].some(hasEffectPreset)).toBe(true);
+		expect([...strictGraph.ruleNames].some(hasEffectRule)).toBe(true);
+		expect([...strictGraph.ruleNames].some(hasDrizzleRule)).toBe(true);
 	});
 
-	it("keeps recommended free of effect packs and effect rules", () => {
+	it("includes drizzle and effect standards in recommended", () => {
 		const recommendedGraph = readPresetGraph("recommended");
 
-		expect([...recommendedGraph.presetNames].some(hasEffectPreset)).toBe(false);
-		expect([...recommendedGraph.ruleNames].some(hasEffectRule)).toBe(false);
+		expect(recommendedGraph.presetNames.has("strict-drizzle")).toBe(true);
+		expect([...recommendedGraph.presetNames].some(hasEffectPreset)).toBe(true);
+		expect([...recommendedGraph.ruleNames].some(hasEffectRule)).toBe(true);
+		expect([...recommendedGraph.ruleNames].some(hasDrizzleRule)).toBe(true);
 	});
 
-	it("includes effect standards in strict-effect opt-in pack", () => {
+	it("keeps strict-effect as a compatibility alias", () => {
 		const strictEffectGraph = readPresetGraph("strict-effect");
 
-		expect(strictEffectGraph.presetNames.has("effect-observability")).toBe(true);
+		expect(strictEffectGraph.presetNames.has("strict")).toBe(true);
 		expect([...strictEffectGraph.ruleNames].some(hasEffectRule)).toBe(true);
 	});
 });

@@ -1,3 +1,4 @@
+import { basename } from "node:path";
 import type { AstNode } from "./types.js";
 
 const TEST_FILENAME_PATTERN = /\.(test|spec)\.[cm]?[jt]sx?$/;
@@ -52,6 +53,42 @@ export const getMemberPropertyName = (value: unknown): string | null => {
 	return getIdentifierName(member.property);
 };
 
+export type CallChain = {
+	readonly rootIdentifier: string | null;
+	readonly members: ReadonlyArray<string>;
+};
+
+const appendCallChainMember = (chain: CallChain | null, memberName: string | null): CallChain | null => {
+	if (!chain || !memberName) return null;
+
+	return {
+		rootIdentifier: chain.rootIdentifier,
+		members: [...chain.members, memberName],
+	};
+};
+
+export const getCallChain = (value: unknown): CallChain | null => {
+	const node = toNode(value);
+	if (!node) return null;
+
+	if (node.type === "Identifier") {
+		return {
+			rootIdentifier: getString(node.name),
+			members: [],
+		};
+	}
+
+	if (node.type === "CallExpression") {
+		return getCallChain(node.callee);
+	}
+
+	if (node.type === "MemberExpression") {
+		return appendCallChainMember(getCallChain(node.object), getMemberPropertyName(node));
+	}
+
+	return null;
+};
+
 export const isMemberExpressionCall = (
 	node: AstNode,
 	objectName: string,
@@ -69,9 +106,9 @@ export const isMemberExpressionCall = (
 export const isEffectCallExpression = (value: unknown): boolean => {
 	const node = toNode(value);
 	if (!node || node.type !== "CallExpression") return false;
-	const callee = toNode(node.callee);
-	if (!callee || callee.type !== "MemberExpression") return false;
-	return getIdentifierName(callee.object) === "Effect";
+	const callChain = getCallChain(node);
+	if (!callChain) return false;
+	return callChain.rootIdentifier === "Effect";
 };
 
 export const extractFunctionName = (node: AstNode): string | null => {
@@ -182,11 +219,93 @@ export const walkAst = (node: unknown, visitor: (candidate: AstNode) => void): v
 	}
 };
 
+export const someNode = (node: unknown, predicate: (candidate: AstNode) => boolean): boolean => {
+	let found = false;
+
+	walkAst(node, (candidate) => {
+		if (found) return;
+		if (predicate(candidate)) {
+			found = true;
+		}
+	});
+
+	return found;
+};
+
+export const collectNodes = (node: unknown, predicate: (candidate: AstNode) => boolean): ReadonlyArray<AstNode> => {
+	const matches: Array<AstNode> = [];
+
+	walkAst(node, (candidate) => {
+		if (predicate(candidate)) {
+			matches.push(candidate);
+		}
+	});
+
+	return matches;
+};
+
+export const getProgramDirectives = (node: AstNode): ReadonlySet<string> => {
+	if (node.type !== "Program") return new Set();
+
+	const directives = new Set<string>();
+	for (const statement of getNodeArray(node, "body")) {
+		if (statement.type !== "ExpressionStatement") continue;
+		const directive = getLiteralString(statement.expression);
+		if (!directive) continue;
+		directives.add(directive);
+	}
+
+	return directives;
+};
+
+export const getProgramBody = (node: AstNode): ReadonlyArray<AstNode> =>
+	node.type === "Program" ? getNodeArray(node, "body") : [];
+
+export const hasProgramDirective = (node: AstNode, directive: string): boolean =>
+	getProgramDirectives(node).has(directive);
+
+export const getImportSources = (node: AstNode): ReadonlySet<string> => {
+	if (node.type !== "Program") return new Set();
+
+	const sources = new Set<string>();
+	for (const statement of getNodeArray(node, "body")) {
+		if (statement.type !== "ImportDeclaration") continue;
+		const source = getLiteralString(statement.source);
+		if (source) {
+			sources.add(source);
+		}
+	}
+
+	return sources;
+};
+
+export const hasImportSource = (
+	node: AstNode,
+	predicate: ((source: string) => boolean) | string,
+): boolean => {
+	const matcher =
+		typeof predicate === "string"
+			? (value: string): boolean => value === predicate
+			: predicate;
+
+	for (const source of getImportSources(node)) {
+		if (matcher(source)) return true;
+	}
+
+	return false;
+};
+
 const FIXTURE_OR_DOCS_PATTERN =
 	/\.(fixture|mock|stub)\.[cm]?[jt]sx?$|(?:^|\/)(__fixtures__|__mocks__|docs|fixtures)\//;
 
 export const isFixtureOrDocsFile = (filename: string | undefined): boolean =>
 	typeof filename === "string" && FIXTURE_OR_DOCS_PATTERN.test(filename);
+
+const MIGRATION_PATTERN =
+	/(?:^|\/)(?:migrations?|db\/migrations)(?:\/|$)|(?:^|\/)\d+[_-][^/]+\.[cm]?[jt]sx?$/;
+
+export const isMigrationFile = (filename: string | undefined): boolean =>
+	typeof filename === "string" && MIGRATION_PATTERN.test(filename);
 
 const COMPOSITION_ROOT_PATTERN =
 	/(?:^|\/)(?:layers?|composition|bootstrap|wire|di|providers?)(?:\.[cm]?[jt]sx?$|\/)/;
@@ -261,3 +380,30 @@ export const serializeAstForComparison = (node: unknown): string => {
 
 	return parts.join("|");
 };
+
+const LOOP_NODE_TYPES = new Set([
+	"ForStatement",
+	"ForInStatement",
+	"ForOfStatement",
+	"WhileStatement",
+	"DoWhileStatement",
+]);
+
+export const isLoopNode = (value: unknown): boolean => {
+	const node = toNode(value);
+	if (!node) return false;
+	return LOOP_NODE_TYPES.has(node.type);
+};
+
+const APP_ROUTER_PATTERN = /(?:^|\/)app\//;
+const APP_ROUTER_ROOT_FILE_PATTERN =
+	/(?:^|\/)app\/(?:.*\/)?(?:page|layout|template|default|loading)\.[cm]?[jt]sx?$/;
+
+export const isAppRouterFile = (filename: string | undefined): boolean =>
+	typeof filename === "string" && APP_ROUTER_PATTERN.test(filename);
+
+export const isAppRouterRootFile = (filename: string | undefined): boolean =>
+	typeof filename === "string" && APP_ROUTER_ROOT_FILE_PATTERN.test(filename);
+
+export const getFilenameBase = (filename: string | undefined): string | null =>
+	typeof filename === "string" ? basename(filename) : null;

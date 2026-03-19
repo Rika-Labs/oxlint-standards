@@ -1,6 +1,6 @@
 # @rikalabs/oxlint-standards
 
-Strict, opinionated Oxlint defaults for TypeScript projects, with a full anti-slop baseline and opt-in packs for framework-specific standards.
+Strict, opinionated Oxlint defaults for TypeScript projects, with a full anti-slop baseline plus first-class Drizzle, Next App Router, and Effect guardrails.
 
 This package ships two things:
 
@@ -38,9 +38,9 @@ bun add -d @rikalabs/oxlint-standards oxlint oxlint-tsgolint
 
 ## Preset strategy
 
-- `strict` is the default baseline for TypeScript + the full anti-slop ruleset.
-- `strict` intentionally excludes framework-specific packs.
-- Framework/domain packs are opt-in via extra presets layered in `extends`.
+- `strict` is the default baseline for TypeScript, the full anti-slop ruleset, and the shipped stack guardrails.
+- `strict` now includes Drizzle, Next App Router, and Effect discipline by default.
+- Packs remain modular internally so consumers can still extend narrower presets like `strict-drizzle` directly when needed.
 
 Example (opt into Effect rules):
 
@@ -55,6 +55,8 @@ Example (opt into Effect rules):
 }
 ```
 
+If you only want the Drizzle pack without the full baseline, extend `strict-drizzle` directly.
+
 ## Presets
 
 1. `core-clean`
@@ -68,10 +70,11 @@ Example (opt into Effect rules):
 9. `effect-observability`
 10. `strict-core`
 11. `strict-runtime`
-12. `strict-web`
-13. `strict-tests`
-14. `strict-effect` (opt-in pack)
-15. `strict`
+12. `strict-drizzle`
+13. `strict-web`
+14. `strict-tests`
+15. `strict-effect` (compatibility alias)
+16. `strict`
 
 Also available: `recommended` (an alias of `strict`).
 
@@ -102,6 +105,23 @@ Default strict custom rules include:
 - `@rikalabs/no-json-parse-default-fallback`
 - `@rikalabs/no-json-stringify-default-fallback`
 - `@rikalabs/no-as-never`
+- `@rikalabs/drizzle-enforce-delete-with-where`
+- `@rikalabs/drizzle-enforce-update-with-where`
+- `@rikalabs/drizzle-no-unbounded-select`
+- `@rikalabs/drizzle-no-raw-sql-crud`
+- `@rikalabs/drizzle-require-transaction-scope`
+- `@rikalabs/drizzle-require-infer-types`
+- `@rikalabs/drizzle-require-references-callback`
+- `@rikalabs/drizzle-no-driver-query-in-domain`
+- `@rikalabs/drizzle-no-query-in-loops`
+- `@rikalabs/next-no-browser-api-in-server-component`
+- `@rikalabs/next-require-server-directive-in-actions`
+- `@rikalabs/next-no-use-client-in-root-files`
+- `@rikalabs/next-no-pages-router-api-in-app-dir`
+- `@rikalabs/effect-no-raw-promises`
+- `@rikalabs/effect-no-try-catch`
+- `@rikalabs/effect-no-async-await`
+- `@rikalabs/effect-no-looped-effects`
 - `@rikalabs/no-placeholder-implementation`
 - `@rikalabs/no-low-signal-public-names`
 - `@rikalabs/no-low-signal-variable-names`
@@ -112,13 +132,13 @@ Default strict custom rules include:
 - `@rikalabs/no-hardcoded-secrets`
 - `@rikalabs/no-sql-string-concat`
 - `@rikalabs/no-anemic-errors`
-
+ 
 `strict-tests` also adds:
 
 - `@rikalabs/no-placeholder-tests`
 - `@rikalabs/no-mock-only-tests`
-
-Opt-in Effect rules include:
+ 
+Effect rules included in `strict` also include:
 
 - `@rikalabs/effect-no-or-die`
 - `@rikalabs/effect-catch-handler-must-use-error`

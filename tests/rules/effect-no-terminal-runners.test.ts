@@ -34,4 +34,20 @@ describe("effect-no-terminal-runners", () => {
 		);
 		expect(reports).toHaveLength(0);
 	});
+
+	it("still reports terminal runners in ordinary index files", () => {
+		const { context, reports } = createTestContext("src/domain/index.ts");
+		const visitor = effectNoTerminalRunnersRule.create(context);
+		visitor.CallExpression?.(
+			asNode({
+				type: "CallExpression",
+				callee: asNode({
+					type: "MemberExpression",
+					object: asNode({ type: "Identifier", name: "Effect" }),
+					property: asNode({ type: "Identifier", name: "runPromise" }),
+				}),
+			}),
+		);
+		expect(reports).toHaveLength(1);
+	});
 });
