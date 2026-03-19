@@ -3,6 +3,8 @@
 	"rules": {
 		"typescript/only-throw-error": "error",
 		"eslint/no-throw-literal": "error",
-		"@rikalabs/effect-no-generic-error-fail": "error"
+		"@rikalabs/effect-no-generic-error-fail": "error",
+		"@rikalabs/effect-require-tagged-errors": "error",
+		"@rikalabs/effect-no-throw-in-services": "error"
 	}
 }

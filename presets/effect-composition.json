@@ -2,6 +2,8 @@
 	"extends": ["./effect-error-model.json"],
 	"rules": {
 		"@rikalabs/effect-prefer-gen-over-flatmap-chain": "error",
-		"@rikalabs/effect-no-effect-return-in-map": "error"
+		"@rikalabs/effect-no-effect-return-in-map": "error",
+		"@rikalabs/effect-no-tacit-usage": "error",
+		"@rikalabs/effect-no-fire-and-forget-fork": "error"
 	}
 }

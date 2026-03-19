@@ -18,6 +18,31 @@ import { noRuntimeCompatFallbacksRule } from "./rules/no-runtime-compat-fallback
 import { noSilentCatchFallbackRule } from "./rules/no-silent-catch-fallback.js";
 import { noUnlistedExternalImportsRule } from "./rules/no-unlisted-external-imports.js";
 import { noVagueVerbsRule } from "./rules/no-vague-verbs.js";
+import { noTodoWithoutIssueRule } from "./rules/no-todo-without-issue.js";
+import { noDisableWithoutRationaleRule } from "./rules/no-disable-without-rationale.js";
+import { noGenericModuleNamesRule } from "./rules/no-generic-module-names.js";
+import { noDefaultExportInDomainRule } from "./rules/no-default-export-in-domain.js";
+import { effectNoAsyncInsideSyncRule } from "./rules/effect-no-async-inside-sync.js";
+import { effectPreferRunmainEntrypointRule } from "./rules/effect-prefer-runmain-entrypoint.js";
+import { noLowSignalPublicNamesRule } from "./rules/no-low-signal-public-names.js";
+import { effectNoTacitUsageRule } from "./rules/effect-no-tacit-usage.js";
+import { effectNoProvideInDomainRule } from "./rules/effect-no-provide-in-domain.js";
+import { effectNoLayerInLeafModulesRule } from "./rules/effect-no-layer-in-leaf-modules.js";
+import { noPlaceholderImplementationRule } from "./rules/no-placeholder-implementation.js";
+import { noAnemicErrorsRule } from "./rules/no-anemic-errors.js";
+import { effectRequireTaggedErrorsRule } from "./rules/effect-require-tagged-errors.js";
+import { noExportedAnyRule } from "./rules/no-exported-any.js";
+import { noInlineExportedObjectTypesRule } from "./rules/no-inline-exported-object-types.js";
+import { noBagOfOptionalsRule } from "./rules/no-bag-of-optionals.js";
+import { requireBrandedIdsRule } from "./rules/require-branded-ids.js";
+import { effectNoPromiseServiceMethodsRule } from "./rules/effect-no-promise-service-methods.js";
+import { effectNoThrowInServicesRule } from "./rules/effect-no-throw-in-services.js";
+import { effectNoFireAndForgetForkRule } from "./rules/effect-no-fire-and-forget-fork.js";
+import { noIdenticalBranchesRule } from "./rules/no-identical-branches.js";
+import { requireExhaustiveTagSwitchRule } from "./rules/require-exhaustive-tag-switch.js";
+import { noRelativeCrossPackageImportsRule } from "./rules/no-relative-cross-package-imports.js";
+import { noCrossLayerImportsRule } from "./rules/no-cross-layer-imports.js";
+import { noCopyPasteExportsRule } from "./rules/no-copy-paste-exports.js";
 import type { RuleModule } from "./types.js";
 
 export const customRules: Readonly<Record<string, RuleModule>> = {
@@ -41,6 +66,31 @@ export const customRules: Readonly<Record<string, RuleModule>> = {
 	"effect-prefer-gen-over-flatmap-chain": effectPreferGenOverFlatmapChainRule,
 	"effect-no-effect-return-in-map": effectNoEffectReturnInMapRule,
 	"effect-require-span-name": effectRequireSpanNameRule,
+	"no-todo-without-issue": noTodoWithoutIssueRule,
+	"no-disable-without-rationale": noDisableWithoutRationaleRule,
+	"no-generic-module-names": noGenericModuleNamesRule,
+	"no-default-export-in-domain": noDefaultExportInDomainRule,
+	"effect-no-async-inside-sync": effectNoAsyncInsideSyncRule,
+	"effect-prefer-runmain-entrypoint": effectPreferRunmainEntrypointRule,
+	"no-low-signal-public-names": noLowSignalPublicNamesRule,
+	"effect-no-tacit-usage": effectNoTacitUsageRule,
+	"effect-no-provide-in-domain": effectNoProvideInDomainRule,
+	"effect-no-layer-in-leaf-modules": effectNoLayerInLeafModulesRule,
+	"no-placeholder-implementation": noPlaceholderImplementationRule,
+	"no-anemic-errors": noAnemicErrorsRule,
+	"effect-require-tagged-errors": effectRequireTaggedErrorsRule,
+	"no-exported-any": noExportedAnyRule,
+	"no-inline-exported-object-types": noInlineExportedObjectTypesRule,
+	"no-bag-of-optionals": noBagOfOptionalsRule,
+	"require-branded-ids": requireBrandedIdsRule,
+	"effect-no-promise-service-methods": effectNoPromiseServiceMethodsRule,
+	"effect-no-throw-in-services": effectNoThrowInServicesRule,
+	"effect-no-fire-and-forget-fork": effectNoFireAndForgetForkRule,
+	"no-identical-branches": noIdenticalBranchesRule,
+	"require-exhaustive-tag-switch": requireExhaustiveTagSwitchRule,
+	"no-relative-cross-package-imports": noRelativeCrossPackageImportsRule,
+	"no-cross-layer-imports": noCrossLayerImportsRule,
+	"no-copy-paste-exports": noCopyPasteExportsRule,
 };
 
 const plugin = {
