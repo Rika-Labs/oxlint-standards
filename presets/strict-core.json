@@ -26,6 +26,28 @@
 		"eslint/no-await-in-loop": "error",
 		"eslint/no-param-reassign": "error",
 		"eslint/no-empty": "error",
+		"eslint/no-console": "error",
+		"eslint/no-warning-comments": "error",
+		"eslint/max-params": ["error", 4],
+		"eslint/max-depth": ["error", 4],
+		"eslint/max-lines-per-function": [
+			"error",
+			{
+				"max": 50,
+				"skipBlankLines": true,
+				"skipComments": true
+			}
+		],
+		"eslint/complexity": ["error", 10],
+		"eslint/no-nested-ternary": "error",
+		"eslint/no-debugger": "error",
+		"eslint/no-eval": "error",
+		"eslint/no-magic-numbers": [
+			"error",
+			{
+				"ignore": [-1, 0, 1, 2]
+			}
+		],
 		"@rikalabs/no-silent-catch-fallback": "error",
 		"@rikalabs/no-runtime-compat-fallbacks": "error",
 		"@rikalabs/no-catch-return-error-object": "error",
@@ -33,6 +55,12 @@
 		"@rikalabs/no-double-type-assertion": "error",
 		"@rikalabs/no-ai-debt-comments": "error",
 		"@rikalabs/no-json-parse-default-fallback": "error",
-		"@rikalabs/no-json-stringify-default-fallback": "error"
+		"@rikalabs/no-json-stringify-default-fallback": "error",
+		"typescript/no-explicit-any": "error",
+		"typescript/no-non-null-assertion": "error",
+		"typescript/no-unnecessary-type-assertion": "error",
+		"typescript/consistent-type-definitions": ["error", "type"],
+		"unicorn/no-static-only-class": "error",
+		"unicorn/no-useless-promise-resolve-reject": "error"
 	}
 }

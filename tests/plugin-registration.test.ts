@@ -4,7 +4,7 @@ import plugin, { customRules } from "../src/plugin/index.ts";
 describe("plugin registration", () => {
 	it("registers all custom rules under @rikalabs", () => {
 		expect(plugin.meta.name).toBe("@rikalabs");
-		expect(Object.keys(customRules)).toHaveLength(62);
+		expect(Object.keys(customRules)).toHaveLength(78);
 		expect(Object.keys(customRules)).toContain("drizzle-enforce-delete-with-where");
 		expect(Object.keys(customRules)).toContain("effect-no-or-die");
 		expect(Object.keys(customRules)).toContain("effect-no-raw-promises");
@@ -16,5 +16,7 @@ describe("plugin registration", () => {
 		expect(Object.keys(customRules)).toContain("no-catch-return-error-object");
 		expect(Object.keys(customRules)).toContain("no-unlisted-external-imports");
 		expect(Object.keys(customRules)).toContain("no-json-stringify-default-fallback");
+		expect(Object.keys(customRules)).toContain("no-trivial-runtime-guard-helpers");
+		expect(Object.keys(customRules)).toContain("no-placeholder-tests");
 	});
 });

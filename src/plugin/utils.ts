@@ -25,6 +25,12 @@ export const getNodeArray = (node: AstNode, key: string): ReadonlyArray<AstNode>
 export const getString = (value: unknown): string | null =>
 	typeof value === "string" ? value : null;
 
+export const getCommentText = (value: unknown): string => {
+	const node = toNode(value);
+	if (!node) return "";
+	return getString(node.value) ?? getString(node.raw) ?? "";
+};
+
 export const getIdentifierName = (value: unknown): string | null => {
 	const node = toNode(value);
 	if (!node || node.type !== "Identifier") return null;
@@ -121,6 +127,15 @@ export const extractFunctionName = (node: AstNode): string | null => {
 	return null;
 };
 
+export const getFunctionStatements = (node: AstNode): ReadonlyArray<AstNode> => {
+	const body = getNode(node, "body");
+	if (!body || body.type !== "BlockStatement") return [];
+	return getNodeArray(body, "body");
+};
+
+export const getFunctionParams = (node: AstNode): ReadonlyArray<AstNode> =>
+	getNodeArray(node, "params");
+
 export const splitWords = (value: string): ReadonlyArray<string> => {
 	if (value.length === 0) return [];
 	const normalized = value.replace(/[-_]/g, " ").replace(/([a-z0-9])([A-Z])/g, "$1 $2").trim();
@@ -156,6 +171,33 @@ export const isDefaultFallbackNode = (value: unknown): boolean => {
 	}
 
 	return false;
+};
+
+export const unwrapChainExpression = (value: unknown): AstNode | null => {
+	const node = toNode(value);
+	if (!node) return null;
+	if (node.type !== "ChainExpression") return node;
+	return toNode(node.expression);
+};
+
+export const isPropertyAccessLike = (value: unknown): boolean => {
+	const node = unwrapChainExpression(value);
+	return node?.type === "MemberExpression";
+};
+
+export const isPrimitiveLiteralNode = (value: unknown): boolean => {
+	const node = toNode(value);
+	if (!node) return false;
+	if (node.type === "Literal") {
+		return (
+			typeof node.value === "string" ||
+			typeof node.value === "number" ||
+			typeof node.value === "boolean" ||
+			node.value === null
+		);
+	}
+	if (node.type !== "TemplateLiteral") return false;
+	return getNodeArray(node, "expressions").length === 0;
 };
 
 export const walkAst = (node: unknown, visitor: (candidate: AstNode) => void): void => {
