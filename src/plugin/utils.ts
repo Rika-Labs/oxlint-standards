@@ -302,7 +302,7 @@ export const isFixtureOrDocsFile = (filename: string | undefined): boolean =>
 	typeof filename === "string" && FIXTURE_OR_DOCS_PATTERN.test(filename);
 
 const MIGRATION_PATTERN =
-	/(?:^|\/)(?:migrations?|drizzle|db\/migrations)(?:\/|$)|(?:^|\/)\d+[_-][^/]+\.[cm]?[jt]sx?$/;
+	/(?:^|\/)(?:migrations?|db\/migrations)(?:\/|$)|(?:^|\/)\d+[_-][^/]+\.[cm]?[jt]sx?$/;
 
 export const isMigrationFile = (filename: string | undefined): boolean =>
 	typeof filename === "string" && MIGRATION_PATTERN.test(filename);
@@ -397,7 +397,7 @@ export const isLoopNode = (value: unknown): boolean => {
 
 const APP_ROUTER_PATTERN = /(?:^|\/)app\//;
 const APP_ROUTER_ROOT_FILE_PATTERN =
-	/(?:^|\/)app\/(?:.*\/)?(?:page|layout|template|default|error|loading)\.[cm]?[jt]sx?$/;
+	/(?:^|\/)app\/(?:.*\/)?(?:page|layout|template|default|loading)\.[cm]?[jt]sx?$/;
 
 export const isAppRouterFile = (filename: string | undefined): boolean =>
 	typeof filename === "string" && APP_ROUTER_PATTERN.test(filename);

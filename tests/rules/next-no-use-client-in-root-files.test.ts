@@ -16,4 +16,11 @@ describe("next-no-use-client-in-root-files", () => {
 		visitor.Program?.(programNode([expressionStatementNode(literalNode("use client"))]));
 		expect(reports).toHaveLength(0);
 	});
+
+	it("allows use client in error boundaries", () => {
+		const { context, reports } = createTestContext("src/app/users/error.tsx");
+		const visitor = nextNoUseClientInRootFilesRule.create(context);
+		visitor.Program?.(programNode([expressionStatementNode(literalNode("use client"))]));
+		expect(reports).toHaveLength(0);
+	});
 });

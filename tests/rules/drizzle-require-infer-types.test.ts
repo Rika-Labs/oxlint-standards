@@ -52,4 +52,22 @@ describe("drizzle-require-infer-types", () => {
 		);
 		expect(reports).toHaveLength(0);
 	});
+
+	it("ignores non-model helper exports", () => {
+		const { context, reports } = createTestContext("src/schema/user-schema.ts");
+		const visitor = drizzleRequireInferTypesRule.create(context);
+		visitor.Program?.(
+			programNode([
+				importDeclarationNode("drizzle-orm"),
+				exportNamedDeclarationNode(
+					asNode({
+						type: "TSTypeAliasDeclaration",
+						id: identifierNode("UserFilter"),
+						typeAnnotation: identifierNode("string"),
+					}),
+				),
+			]),
+		);
+		expect(reports).toHaveLength(0);
+	});
 });

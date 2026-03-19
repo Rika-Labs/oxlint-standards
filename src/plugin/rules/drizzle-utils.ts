@@ -91,18 +91,28 @@ export const countWriteCalls = (node: AstNode): number => {
 	return count;
 };
 
-export const hasTransactionCall = (node: AstNode): boolean => {
-	let found = false;
+const TRANSACTION_METHODS = new Set(["transaction", "withTransaction"]);
+
+export const collectTransactionScopedWriteSerializations = (node: AstNode): ReadonlySet<string> => {
+	const safeWrites = new Set<string>();
 
 	walkAst(node, (candidate) => {
-		if (found || candidate.type !== "CallExpression") return;
+		if (candidate.type !== "CallExpression") return;
 		const methodName = getMethodCalleeName(candidate);
-		if (methodName === "transaction" || methodName === "withTransaction") {
-			found = true;
+		if (!methodName || !TRANSACTION_METHODS.has(methodName)) return;
+
+		const args = Array.isArray(candidate.arguments) ? candidate.arguments : [];
+		for (const arg of args) {
+			walkAst(arg, (inner) => {
+				if (inner.type !== "CallExpression") return;
+				if (!isMethodCall(inner, DRIZZLE_WRITE_METHODS)) return;
+
+				safeWrites.add(serializeAstForComparison(inner));
+			});
 		}
 	});
 
-	return found;
+	return safeWrites;
 };
 
 const QUERY_LOOP_METHODS = new Set(["select", "insert", "update", "delete", "execute", "findMany", "findFirst"]);

@@ -1,8 +1,24 @@
-import type { RuleModule } from "../types.js";
-import { serializeAstForComparison, walkAst } from "../utils.js";
+import type { AstNode, RuleModule } from "../types.js";
+import { getIdentifierName, serializeAstForComparison, walkAst } from "../utils.js";
 import { isDrizzleFile, isDrizzleIgnoredFile } from "./drizzle-utils.js";
 
 const INFER_TYPE_PATTERN = /\$infer(?:Select|Insert)/;
+const NON_MODEL_TYPE_SUFFIX_PATTERN =
+	/(?:Args|Config|Filter|Filters|Input|Options|Output|Params|Payload|Query|Result)$/;
+
+const getExportedTypeName = (declaration: AstNode): string | null => {
+	if (declaration.type !== "TSInterfaceDeclaration" && declaration.type !== "TSTypeAliasDeclaration") {
+		return null;
+	}
+
+	return getIdentifierName(declaration.id);
+};
+
+const shouldCheckModelTypeName = (name: string | null): boolean => {
+	if (!name) return false;
+	if (NON_MODEL_TYPE_SUFFIX_PATTERN.test(name)) return false;
+	return /(?:^New[A-Z]|^[A-Z][A-Za-z0-9]+(?:Insert|Select)?$)/.test(name);
+};
 
 export const drizzleRequireInferTypesRule: RuleModule = {
 	meta: {
@@ -35,6 +51,7 @@ export const drizzleRequireInferTypesRule: RuleModule = {
 						return;
 					}
 
+					if (!shouldCheckModelTypeName(getExportedTypeName(declaration as AstNode))) return;
 					if (INFER_TYPE_PATTERN.test(serializeAstForComparison(declaration))) return;
 					context.report({ node: candidate, messageId: "manualType" });
 				});

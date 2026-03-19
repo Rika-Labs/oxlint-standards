@@ -39,4 +39,16 @@ describe("drizzle-enforce-delete-with-where", () => {
 		);
 		expect(reports).toHaveLength(0);
 	});
+
+	it("does not ignore ordinary files under drizzle directories", () => {
+		const { context, reports } = createTestContext("src/drizzle/schema.ts");
+		const visitor = drizzleEnforceDeleteWithWhereRule.create(context);
+		visitor.Program?.(
+			programNode([
+				importDeclarationNode("drizzle-orm"),
+				expressionStatementNode(methodCallNode(identifierNode("db"), "delete", [identifierNode("users")])),
+			]),
+		);
+		expect(reports).toHaveLength(1);
+	});
 });

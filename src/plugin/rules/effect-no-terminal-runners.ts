@@ -17,7 +17,13 @@ const TERMINAL_RUNNERS = new Set([
 	"unsafeRunSync",
 	"unwrap",
 ]);
-const ENTRYPOINT_FILE_PATTERN = /(?:^|\/)(?:main|index|cli|bin|server)\.[cm]?[jt]sx?$/;
+const ENTRYPOINT_FILE_PATTERNS = [
+	/(?:^|\/)(?:main|cli)\.[cm]?[jt]sx?$/,
+	/(?:^|\/)bin\/[^/]+\.[cm]?[jt]sx?$/,
+];
+
+const isEntrypointFile = (filename: string | undefined): boolean =>
+	typeof filename === "string" && ENTRYPOINT_FILE_PATTERNS.some((pattern) => pattern.test(filename));
 
 export const effectNoTerminalRunnersRule: RuleModule = {
 	meta: {
@@ -33,7 +39,7 @@ export const effectNoTerminalRunnersRule: RuleModule = {
 	},
 	create(context) {
 		if (isTestFilename(context.filename)) return {};
-		if (context.filename && ENTRYPOINT_FILE_PATTERN.test(context.filename)) return {};
+		if (isEntrypointFile(context.filename)) return {};
 
 		return {
 			CallExpression(node) {

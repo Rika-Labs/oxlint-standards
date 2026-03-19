@@ -1,8 +1,17 @@
 import type { AstNode, RuleModule } from "../types.js";
-import { getNode, isFunctionValue, walkAst } from "../utils.js";
 import {
+	getNode,
+	getNodeArray,
+	getProgramBody,
+	isFunctionValue,
+	serializeAstForComparison,
+	walkAst,
+} from "../utils.js";
+import {
+	collectTransactionScopedWriteSerializations,
 	countWriteCalls,
-	hasTransactionCall,
+	isMethodCall,
+	DRIZZLE_WRITE_METHODS,
 	isDrizzleFile,
 	isDrizzleIgnoredFile,
 } from "./drizzle-utils.js";
@@ -13,6 +22,29 @@ const getFunctionBody = (node: AstNode): AstNode | null => {
 	}
 
 	return null;
+};
+
+const getTopLevelFunctionNodes = (program: AstNode): ReadonlyArray<AstNode> => {
+	const functions: Array<AstNode> = [];
+
+	for (const statement of getProgramBody(program)) {
+		if (statement.type === "FunctionDeclaration") {
+			functions.push(statement);
+			continue;
+		}
+
+		const declaration =
+			statement.type === "ExportNamedDeclaration" ? getNode(statement, "declaration") : statement;
+		if (!declaration || declaration.type !== "VariableDeclaration") continue;
+
+		for (const declarator of getNodeArray(declaration, "declarations")) {
+			const init = getNode(declarator, "init");
+			if (!init || !isFunctionValue(init)) continue;
+			functions.push(init);
+		}
+	}
+
+	return functions;
 };
 
 export const drizzleRequireTransactionScopeRule: RuleModule = {
@@ -33,15 +65,27 @@ export const drizzleRequireTransactionScopeRule: RuleModule = {
 			Program(node) {
 				if (!isDrizzleFile(node, context.filename)) return;
 
-				walkAst(node, (candidate) => {
+				for (const candidate of getTopLevelFunctionNodes(node)) {
 					const body = getFunctionBody(candidate);
-					if (!body) return;
+					if (!body) continue;
 
-					if (countWriteCalls(body) < 2) return;
-					if (hasTransactionCall(body)) return;
+					const totalWrites = countWriteCalls(body);
+					if (totalWrites < 2) continue;
+
+					const safeWrites = collectTransactionScopedWriteSerializations(body);
+					let unsafeWrites = 0;
+					walkAst(body, (inner) => {
+						if (inner.type !== "CallExpression") return;
+						if (!isMethodCall(inner, DRIZZLE_WRITE_METHODS)) return;
+						const serialization = serializeAstForComparison(inner);
+						if (safeWrites.has(serialization)) return;
+						unsafeWrites += 1;
+					});
+
+					if (unsafeWrites === 0) continue;
 
 					context.report({ node: candidate, messageId: "missingTransaction" });
-				});
+				}
 			},
 		};
 	},
