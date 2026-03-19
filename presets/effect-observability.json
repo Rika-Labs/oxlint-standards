@@ -1,5 +1,5 @@
 {
-	"extends": ["./effect-composition.json"],
+	"extends": ["./effect-service-hygiene.json"],
 	"rules": {
 		"@rikalabs/effect-require-span-name": "error"
 	}

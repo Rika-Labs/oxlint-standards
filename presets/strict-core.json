@@ -1,5 +1,5 @@
 {
-	"extends": ["./naming-discipline.json"],
+	"extends": ["./anti-slop.json"],
 	"plugins": ["typescript", "import", "promise", "unicorn", "oxc", "eslint"],
 	"categories": {
 		"correctness": "error",

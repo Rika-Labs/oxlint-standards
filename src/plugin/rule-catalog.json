@@ -98,5 +98,130 @@
 		"id": "@rikalabs/effect-require-span-name",
 		"nearestBuiltIn": "none",
 		"whyInsufficient": "Oxlint has no span naming convention checks for Effect.fn or Effect.withSpan."
+	},
+	{
+		"id": "@rikalabs/no-todo-without-issue",
+		"nearestBuiltIn": "eslint/no-warning-comments",
+		"whyInsufficient": "Built-in warning comment rules do not enforce tracked issue references on TODO/FIXME markers."
+	},
+	{
+		"id": "@rikalabs/no-disable-without-rationale",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no rule requiring rationale or ticket references on lint-disable comments."
+	},
+	{
+		"id": "@rikalabs/no-generic-module-names",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no rule for banning generic filenames like utils or helpers."
+	},
+	{
+		"id": "@rikalabs/no-default-export-in-domain",
+		"nearestBuiltIn": "import/no-default-export",
+		"whyInsufficient": "Built-in default export rules cannot scope enforcement to specific architectural layers."
+	},
+	{
+		"id": "@rikalabs/effect-no-async-inside-sync",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no Effect-specific rule for catching async functions inside Effect.sync."
+	},
+	{
+		"id": "@rikalabs/effect-prefer-runmain-entrypoint",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no Effect runtime rule for preferring runMain in entrypoint files."
+	},
+	{
+		"id": "@rikalabs/no-low-signal-public-names",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no rule for banning generic exported names like processData or handleResult."
+	},
+	{
+		"id": "@rikalabs/effect-no-tacit-usage",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no Effect-specific rule for banning point-free usage that hurts inference."
+	},
+	{
+		"id": "@rikalabs/effect-no-provide-in-domain",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no Effect composition rule restricting Effect.provide to composition roots."
+	},
+	{
+		"id": "@rikalabs/effect-no-layer-in-leaf-modules",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no Effect-specific rule for restricting Layer construction to infrastructure files."
+	},
+	{
+		"id": "@rikalabs/no-placeholder-implementation",
+		"nearestBuiltIn": "eslint/no-warning-comments",
+		"whyInsufficient": "Built-in warning comment rules do not cover string literals, identifiers, or fixture-aware file exclusion."
+	},
+	{
+		"id": "@rikalabs/no-anemic-errors",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no rule for detecting vague error messages or generic error-object return patterns."
+	},
+	{
+		"id": "@rikalabs/effect-require-tagged-errors",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no Effect rule requiring tagged domain errors in Effect.fail calls."
+	},
+	{
+		"id": "@rikalabs/no-exported-any",
+		"nearestBuiltIn": "typescript/no-explicit-any",
+		"whyInsufficient": "Built-in any rules cannot scope exceptions to interop adapters or generated code."
+	},
+	{
+		"id": "@rikalabs/no-inline-exported-object-types",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no rule limiting inline object type size on exported APIs."
+	},
+	{
+		"id": "@rikalabs/no-bag-of-optionals",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no rule detecting exported types with excessive optional fields and missing discriminants."
+	},
+	{
+		"id": "@rikalabs/require-branded-ids",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no rule enforcing branded types for Id-suffixed type aliases."
+	},
+	{
+		"id": "@rikalabs/effect-no-promise-service-methods",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no Effect boundary rule for banning Promise returns in service methods."
+	},
+	{
+		"id": "@rikalabs/effect-no-throw-in-services",
+		"nearestBuiltIn": "typescript/only-throw-error",
+		"whyInsufficient": "Built-in throw rules do not restrict naked throw to Effect.try/tryPromise boundaries."
+	},
+	{
+		"id": "@rikalabs/effect-no-fire-and-forget-fork",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no Effect concurrency rule for ensuring fork results are handled."
+	},
+	{
+		"id": "@rikalabs/no-identical-branches",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no rule for detecting structurally identical if/else or switch branches."
+	},
+	{
+		"id": "@rikalabs/require-exhaustive-tag-switch",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no rule enforcing exhaustive switch on tagged union discriminants."
+	},
+	{
+		"id": "@rikalabs/no-relative-cross-package-imports",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint import rules do not detect relative paths crossing workspace package boundaries."
+	},
+	{
+		"id": "@rikalabs/no-cross-layer-imports",
+		"nearestBuiltIn": "eslint/no-restricted-imports",
+		"whyInsufficient": "Built-in restricted import rules cannot enforce architectural layer dependency direction."
+	},
+	{
+		"id": "@rikalabs/no-copy-paste-exports",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no rule for detecting near-identical exported function bodies."
 	}
 ]

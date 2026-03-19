@@ -1,0 +1,12 @@
+{
+	"rules": {
+		"@rikalabs/no-exported-any": "error",
+		"@rikalabs/no-inline-exported-object-types": "error",
+		"@rikalabs/no-default-export-in-domain": "error",
+		"@rikalabs/no-bag-of-optionals": "error",
+		"@rikalabs/require-branded-ids": "error",
+		"@rikalabs/require-exhaustive-tag-switch": "error",
+		"@rikalabs/no-cross-layer-imports": "error",
+		"@rikalabs/no-relative-cross-package-imports": "error"
+	}
+}

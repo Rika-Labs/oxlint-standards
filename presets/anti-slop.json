@@ -1,0 +1,13 @@
+{
+	"extends": ["./naming-discipline.json"],
+	"rules": {
+		"@rikalabs/no-placeholder-implementation": "error",
+		"@rikalabs/no-disable-without-rationale": "error",
+		"@rikalabs/no-todo-without-issue": "error",
+		"@rikalabs/no-anemic-errors": "error",
+		"@rikalabs/no-low-signal-public-names": "error",
+		"@rikalabs/no-generic-module-names": "error",
+		"@rikalabs/no-identical-branches": "error",
+		"@rikalabs/no-copy-paste-exports": "error"
+	}
+}
