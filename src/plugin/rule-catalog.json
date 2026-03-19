@@ -223,5 +223,85 @@
 		"id": "@rikalabs/no-copy-paste-exports",
 		"nearestBuiltIn": "none",
 		"whyInsufficient": "Oxlint has no rule for detecting near-identical exported function bodies."
+	},
+	{
+		"id": "@rikalabs/no-trivial-runtime-guard-helpers",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no rule for banning trivial runtime guard helper declarations and calls as a family."
+	},
+	{
+		"id": "@rikalabs/no-trivial-property-helpers",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no rule for banning trivial property getter helpers with primitive checks or defaults."
+	},
+	{
+		"id": "@rikalabs/no-single-use-trivial-helpers",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no rule for detecting tiny file-local helpers that are only called once."
+	},
+	{
+		"id": "@rikalabs/no-bare-wrapper-functions",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no rule for banning functions that only pass arguments through unchanged."
+	},
+	{
+		"id": "@rikalabs/no-pass-through-intermediate-vars",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no rule for immediate alias variables that are returned or passed through unchanged."
+	},
+	{
+		"id": "@rikalabs/no-property-default-fallbacks",
+		"nearestBuiltIn": "unicorn/no-useless-fallback-in-spread",
+		"whyInsufficient": "Built-in fallback rules do not ban property-level defaulting that hides missing runtime data."
+	},
+	{
+		"id": "@rikalabs/no-redundant-const-assertion",
+		"nearestBuiltIn": "typescript/prefer-as-const",
+		"whyInsufficient": "Built-in const assertion rules do not ban redundant primitive-literal 'as const' uses."
+	},
+	{
+		"id": "@rikalabs/no-tutorial-comments",
+		"nearestBuiltIn": "eslint/no-warning-comments",
+		"whyInsufficient": "Built-in warning comment rules do not detect tutorial-style narration comments in generated code."
+	},
+	{
+		"id": "@rikalabs/no-commented-out-code",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no rule for comments that lexically resemble dead commented-out code."
+	},
+	{
+		"id": "@rikalabs/no-debug-residue-filenames",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no filename rule for temp, backup, or v2 residue naming."
+	},
+	{
+		"id": "@rikalabs/no-low-signal-variable-names",
+		"nearestBuiltIn": "eslint/id-length",
+		"whyInsufficient": "Generic identifier length rules do not target low-signal domainless names like data or result."
+	},
+	{
+		"id": "@rikalabs/no-standalone-classes",
+		"nearestBuiltIn": "unicorn/no-static-only-class",
+		"whyInsufficient": "Built-in class rules do not ban ordinary non-inheriting classes in favor of simpler functions and objects."
+	},
+	{
+		"id": "@rikalabs/no-hardcoded-secrets",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no secret-literal rule scoped to secret-like variable and property names."
+	},
+	{
+		"id": "@rikalabs/no-sql-string-concat",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no rule for SQL strings built with concatenation or untagged template literals."
+	},
+	{
+		"id": "@rikalabs/no-placeholder-tests",
+		"nearestBuiltIn": "jest/prefer-todo",
+		"whyInsufficient": "Built-in test rules do not ban empty or placeholder test bodies across Jest and Vitest call shapes."
+	},
+	{
+		"id": "@rikalabs/no-mock-only-tests",
+		"nearestBuiltIn": "jest/expect-expect",
+		"whyInsufficient": "Assertion presence checks do not detect tests that only configure mocks and spies without any meaningful assertion."
 	}
 ]

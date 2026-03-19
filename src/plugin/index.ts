@@ -43,6 +43,22 @@ import { requireExhaustiveTagSwitchRule } from "./rules/require-exhaustive-tag-s
 import { noRelativeCrossPackageImportsRule } from "./rules/no-relative-cross-package-imports.js";
 import { noCrossLayerImportsRule } from "./rules/no-cross-layer-imports.js";
 import { noCopyPasteExportsRule } from "./rules/no-copy-paste-exports.js";
+import { noTrivialRuntimeGuardHelpersRule } from "./rules/no-trivial-runtime-guard-helpers.js";
+import { noTrivialPropertyHelpersRule } from "./rules/no-trivial-property-helpers.js";
+import { noSingleUseTrivialHelpersRule } from "./rules/no-single-use-trivial-helpers.js";
+import { noBareWrapperFunctionsRule } from "./rules/no-bare-wrapper-functions.js";
+import { noPassThroughIntermediateVarsRule } from "./rules/no-pass-through-intermediate-vars.js";
+import { noPropertyDefaultFallbacksRule } from "./rules/no-property-default-fallbacks.js";
+import { noRedundantConstAssertionRule } from "./rules/no-redundant-const-assertion.js";
+import { noTutorialCommentsRule } from "./rules/no-tutorial-comments.js";
+import { noCommentedOutCodeRule } from "./rules/no-commented-out-code.js";
+import { noDebugResidueFilenamesRule } from "./rules/no-debug-residue-filenames.js";
+import { noLowSignalVariableNamesRule } from "./rules/no-low-signal-variable-names.js";
+import { noStandaloneClassesRule } from "./rules/no-standalone-classes.js";
+import { noHardcodedSecretsRule } from "./rules/no-hardcoded-secrets.js";
+import { noSqlStringConcatRule } from "./rules/no-sql-string-concat.js";
+import { noPlaceholderTestsRule } from "./rules/no-placeholder-tests.js";
+import { noMockOnlyTestsRule } from "./rules/no-mock-only-tests.js";
 import type { RuleModule } from "./types.js";
 
 export const customRules: Readonly<Record<string, RuleModule>> = {
@@ -91,6 +107,22 @@ export const customRules: Readonly<Record<string, RuleModule>> = {
 	"no-relative-cross-package-imports": noRelativeCrossPackageImportsRule,
 	"no-cross-layer-imports": noCrossLayerImportsRule,
 	"no-copy-paste-exports": noCopyPasteExportsRule,
+	"no-trivial-runtime-guard-helpers": noTrivialRuntimeGuardHelpersRule,
+	"no-trivial-property-helpers": noTrivialPropertyHelpersRule,
+	"no-single-use-trivial-helpers": noSingleUseTrivialHelpersRule,
+	"no-bare-wrapper-functions": noBareWrapperFunctionsRule,
+	"no-pass-through-intermediate-vars": noPassThroughIntermediateVarsRule,
+	"no-property-default-fallbacks": noPropertyDefaultFallbacksRule,
+	"no-redundant-const-assertion": noRedundantConstAssertionRule,
+	"no-tutorial-comments": noTutorialCommentsRule,
+	"no-commented-out-code": noCommentedOutCodeRule,
+	"no-debug-residue-filenames": noDebugResidueFilenamesRule,
+	"no-low-signal-variable-names": noLowSignalVariableNamesRule,
+	"no-standalone-classes": noStandaloneClassesRule,
+	"no-hardcoded-secrets": noHardcodedSecretsRule,
+	"no-sql-string-concat": noSqlStringConcatRule,
+	"no-placeholder-tests": noPlaceholderTestsRule,
+	"no-mock-only-tests": noMockOnlyTestsRule,
 };
 
 const plugin = {
