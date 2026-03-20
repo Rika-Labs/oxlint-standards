@@ -26,6 +26,7 @@
 		"eslint/no-await-in-loop": "error",
 		"eslint/no-param-reassign": "error",
 		"eslint/no-empty": "error",
+		"eslint/require-yield": "off",
 		"eslint/no-console": "error",
 		"eslint/no-warning-comments": "error",
 		"eslint/max-params": ["error", 4],

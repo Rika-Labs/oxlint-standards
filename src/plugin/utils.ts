@@ -1,7 +1,8 @@
 import { basename } from "node:path";
 import type { AstNode } from "./types.js";
 
-const TEST_FILENAME_PATTERN = /\.(test|spec)\.[cm]?[jt]sx?$/;
+const TEST_FILENAME_PATTERN =
+	/(?:\.(?:test|spec)\.[cm]?[jt]sx?$|(?:^|\/)(?:test|tests|__tests__)(?:\/|$))/;
 
 export const isTestFilename = (filename: string | undefined): boolean =>
 	typeof filename === "string" && TEST_FILENAME_PATTERN.test(filename);

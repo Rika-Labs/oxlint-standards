@@ -50,4 +50,20 @@ describe("effect-no-terminal-runners", () => {
 		);
 		expect(reports).toHaveLength(1);
 	});
+
+	it("allows terminal runners in test helper files", () => {
+		const { context, reports } = createTestContext("tests/helpers/runtime.ts");
+		const visitor = effectNoTerminalRunnersRule.create(context);
+		visitor.CallExpression?.(
+			asNode({
+				type: "CallExpression",
+				callee: asNode({
+					type: "MemberExpression",
+					object: asNode({ type: "Identifier", name: "Effect" }),
+					property: asNode({ type: "Identifier", name: "runPromise" }),
+				}),
+			}),
+		);
+		expect(reports).toHaveLength(0);
+	});
 });
