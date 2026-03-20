@@ -1,6 +1,6 @@
 {
 	"name": "@rikalabs/oxlint-standards",
-	"version": "0.2.1",
+	"version": "0.2.2",
 	"description": "Strict Oxlint presets and custom TypeScript-first rules with opt-in packs",
 	"type": "module",
 	"license": "MIT",
@@ -39,6 +39,7 @@
 	],
 	"scripts": {
 		"build": "bun x tsc -p tsconfig.json",
+		"prepare": "bun run build",
 		"typecheck": "bun x tsc --noEmit",
 		"lint": "oxlint .",
 		"test": "bun test",
