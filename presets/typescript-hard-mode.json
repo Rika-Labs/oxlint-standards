@@ -8,7 +8,6 @@
 		"typescript/no-unsafe-member-access": "error",
 		"typescript/no-unsafe-return": "error",
 		"typescript/no-unsafe-argument": "error",
-		"typescript/no-unsafe-enum-comparison": "error",
 		"typescript/no-unnecessary-type-assertion": "error",
 		"typescript/strict-boolean-expressions": "error",
 		"typescript/switch-exhaustiveness-check": "error",

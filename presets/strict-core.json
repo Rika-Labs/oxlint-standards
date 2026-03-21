@@ -1,15 +1,6 @@
 {
 	"extends": ["./anti-slop.json"],
 	"plugins": ["typescript", "import", "promise", "unicorn", "oxc", "eslint"],
-	"categories": {
-		"correctness": "error",
-		"suspicious": "error",
-		"pedantic": "error",
-		"perf": "error",
-		"style": "error",
-		"restriction": "error",
-		"nursery": "error"
-	},
 	"rules": {
 		"typescript/consistent-type-imports": "error",
 		"typescript/no-misused-promises": "error",
@@ -17,8 +8,6 @@
 		"typescript/no-unsafe-type-assertion": "error",
 		"typescript/no-redundant-type-constituents": "error",
 		"import/no-reexport": "error",
-		"import/no-commonjs": "error",
-		"import/no-amd": "error",
 		"import/no-anonymous-default-export": "error",
 		"promise/no-return-wrap": "error",
 		"eslint/array-callback-return": "error",

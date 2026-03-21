@@ -12,7 +12,6 @@
 				"threshold": 0
 			}
 		],
-		"oxc/no-const-enum": "error",
 		"import/no-cycle": "error",
 		"import/no-self-import": "error",
 		"import/no-duplicates": "error",
