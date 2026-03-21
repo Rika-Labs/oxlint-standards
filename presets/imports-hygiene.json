@@ -4,7 +4,6 @@
 		"import/first": "error",
 		"import/no-absolute-path": "error",
 		"import/no-mutable-exports": "error",
-		"import/no-webpack-loader-syntax": "error",
 		"@rikalabs/no-import-then-reexport": "error"
 	}
 }
