@@ -1,0 +1,8 @@
+{
+	"extends": [
+		"./strict-ts.json",
+		"./strict-drizzle.json",
+		"./strict-web.json",
+		"./effect-observability.json"
+	]
+}

@@ -1,6 +1,6 @@
 {
 	"name": "@rikalabs/oxlint-standards",
-	"version": "0.3.0",
+	"version": "0.4.0",
 	"description": "Strict Oxlint presets and custom TypeScript-first rules with opt-in packs",
 	"type": "module",
 	"license": "MIT",
@@ -35,6 +35,7 @@
 		"dist",
 		"presets",
 		"README.md",
+		"CHANGELOG.md",
 		"LICENSE"
 	],
 	"scripts": {

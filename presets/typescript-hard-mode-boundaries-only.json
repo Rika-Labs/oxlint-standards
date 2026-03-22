@@ -1,0 +1,6 @@
+{
+	"extends": ["./typescript-hard-mode.json"],
+	"rules": {
+		"typescript/explicit-function-return-type": "off"
+	}
+}

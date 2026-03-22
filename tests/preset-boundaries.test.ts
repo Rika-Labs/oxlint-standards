@@ -49,32 +49,92 @@ const readPresetGraph = (entryPresetName: string): PresetGraph => {
 };
 
 const hasEffectRule = (ruleName: string): boolean => ruleName.startsWith("@rikalabs/effect-");
-const hasEffectPreset = (presetName: string): boolean => presetName.startsWith("effect-");
 const hasDrizzleRule = (ruleName: string): boolean => ruleName.startsWith("@rikalabs/drizzle-");
 
 describe("preset boundaries", () => {
-	it("includes drizzle and effect standards in strict", () => {
+	it("strict and recommended are TypeScript-only without stack packs", () => {
 		const strictGraph = readPresetGraph("strict");
 
-		expect(strictGraph.presetNames.has("strict-drizzle")).toBe(true);
-		expect([...strictGraph.presetNames].some(hasEffectPreset)).toBe(true);
-		expect([...strictGraph.ruleNames].some(hasEffectRule)).toBe(true);
-		expect([...strictGraph.ruleNames].some(hasDrizzleRule)).toBe(true);
-	});
+		expect(strictGraph.presetNames.has("strict-drizzle")).toBe(false);
+		expect(strictGraph.presetNames.has("strict-web")).toBe(false);
+		expect(strictGraph.presetNames.has("effect-observability")).toBe(false);
+		expect([...strictGraph.ruleNames].some(hasEffectRule)).toBe(false);
+		expect([...strictGraph.ruleNames].some(hasDrizzleRule)).toBe(false);
 
-	it("includes drizzle and effect standards in recommended", () => {
 		const recommendedGraph = readPresetGraph("recommended");
 
-		expect(recommendedGraph.presetNames.has("strict-drizzle")).toBe(true);
-		expect([...recommendedGraph.presetNames].some(hasEffectPreset)).toBe(true);
-		expect([...recommendedGraph.ruleNames].some(hasEffectRule)).toBe(true);
-		expect([...recommendedGraph.ruleNames].some(hasDrizzleRule)).toBe(true);
+		expect(recommendedGraph.presetNames.has("strict-drizzle")).toBe(false);
+		expect(recommendedGraph.presetNames.has("strict-web")).toBe(false);
 	});
 
-	it("keeps strict-effect as a compatibility alias", () => {
+	it("includes drizzle and effect standards in strict-full", () => {
+		const fullGraph = readPresetGraph("strict-full");
+
+		expect(fullGraph.presetNames.has("strict-drizzle")).toBe(true);
+		expect(fullGraph.presetNames.has("strict-web")).toBe(true);
+		expect(fullGraph.presetNames.has("effect-observability")).toBe(true);
+		expect([...fullGraph.ruleNames].some(hasEffectRule)).toBe(true);
+		expect([...fullGraph.ruleNames].some(hasDrizzleRule)).toBe(true);
+	});
+
+	it("keeps strict-effect as a compatibility alias of strict-full", () => {
 		const strictEffectGraph = readPresetGraph("strict-effect");
 
-		expect(strictEffectGraph.presetNames.has("strict")).toBe(true);
+		expect(strictEffectGraph.presetNames.has("strict-full")).toBe(true);
 		expect([...strictEffectGraph.ruleNames].some(hasEffectRule)).toBe(true);
+	});
+
+	it("strict-ts is portable TS without drizzle, web, or effect packs", () => {
+		const tsGraph = readPresetGraph("strict-ts");
+
+		expect(tsGraph.presetNames.has("strict-core")).toBe(true);
+		expect(tsGraph.presetNames.has("strict-runtime")).toBe(true);
+		expect(tsGraph.presetNames.has("strict-tests")).toBe(true);
+		expect(tsGraph.presetNames.has("strict-drizzle")).toBe(false);
+		expect(tsGraph.presetNames.has("strict-web")).toBe(false);
+		expect(tsGraph.presetNames.has("effect-observability")).toBe(false);
+	});
+
+	it("strict is an alias chain to strict-ts", () => {
+		const strictPreset = readPreset("strict");
+
+		expect(strictPreset.extends).toEqual(["./strict-ts.json"]);
+	});
+
+	it("strict-full composes strict-ts with stack-specific extends", () => {
+		const full = readPreset("strict-full");
+
+		expect(full.extends).toEqual([
+			"./strict-ts.json",
+			"./strict-drizzle.json",
+			"./strict-web.json",
+			"./effect-observability.json",
+		]);
+	});
+
+	it("strict-ts-boundaries turns off explicit-function-return-type", () => {
+		const boundaries = readPreset("strict-ts-boundaries");
+
+		expect(boundaries.extends).toEqual(["./strict-ts.json"]);
+		expect(boundaries.rules?.["typescript/explicit-function-return-type"]).toBe("off");
+	});
+
+	it("recommended-ts aliases strict", () => {
+		const rec = readPreset("recommended-ts");
+
+		expect(rec.extends).toEqual(["./strict.json"]);
+	});
+
+	it("typescript-hard-mode-boundaries-only disables explicit-function-return-type", () => {
+		const b = readPreset("typescript-hard-mode-boundaries-only");
+
+		expect(b.extends).toEqual(["./typescript-hard-mode.json"]);
+		expect(b.rules?.["typescript/explicit-function-return-type"]).toBe("off");
+	});
+
+	it("strict-next extends strict-web", () => {
+		const next = readPreset("strict-next");
+
+		expect(next.extends).toEqual(["./strict-web.json"]);
 	});
 });

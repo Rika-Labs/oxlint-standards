@@ -52,5 +52,49 @@
 		"typescript/consistent-type-definitions": ["error", "type"],
 		"unicorn/no-static-only-class": "error",
 		"unicorn/no-useless-promise-resolve-reject": "error"
-	}
+	},
+	"overrides": [
+		{
+			"files": [
+				"**/*.{test,spec}.{ts,tsx,mts,cts}",
+				"**/__tests__/**/*.{ts,tsx,mts,cts}"
+			],
+			"rules": {
+				"eslint/no-magic-numbers": "off",
+				"eslint/max-lines-per-function": [
+					"error",
+					{
+						"max": 120,
+						"skipBlankLines": true,
+						"skipComments": true
+					}
+				],
+				"eslint/complexity": ["error", 20]
+			}
+		},
+		{
+			"files": [
+				"**/scripts/**/*.{ts,tsx,mts,cts,mjs,cjs}",
+				"**/*.config.{ts,mts,cts,js,mjs,cjs}",
+				"**/tools/**/*.{ts,tsx,mts,cts}"
+			],
+			"rules": {
+				"eslint/no-console": "off"
+			}
+		},
+		{
+			"files": ["**/components/**/*.{tsx,jsx}", "**/app/**/*.{tsx,jsx}"],
+			"rules": {
+				"eslint/max-lines-per-function": [
+					"error",
+					{
+						"max": 120,
+						"skipBlankLines": true,
+						"skipComments": true
+					}
+				],
+				"eslint/complexity": ["error", 15]
+			}
+		}
+	]
 }

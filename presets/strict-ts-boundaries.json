@@ -1,0 +1,6 @@
+{
+	"extends": ["./strict-ts.json"],
+	"rules": {
+		"typescript/explicit-function-return-type": "off"
+	}
+}

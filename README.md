@@ -1,6 +1,6 @@
 # @rikalabs/oxlint-standards
 
-Strict, opinionated Oxlint defaults for TypeScript projects, with a full anti-slop baseline plus first-class Drizzle, Next App Router, and Effect guardrails.
+Strict, opinionated Oxlint defaults for TypeScript projects, with a full anti-slop baseline. Drizzle, Next App Router, and Effect guardrails are opt-in presets (`strict-full` or individual packs).
 
 This package ships two things:
 
@@ -36,13 +36,19 @@ bun add -d @rikalabs/oxlint-standards oxlint oxlint-tsgolint
 
 `jsPlugins` must be declared by the consuming project because Oxlint currently only merges `rules`, `plugins`, and `overrides` through `extends`, and `options.typeAware` must live in the root config.
 
+## Upgrading from 0.3.x
+
+Version **0.4.0** makes **`strict`** / **`recommended`** TypeScript-only. If you still need Drizzle, Next, and Effect rules in one preset, switch your `extends` to **`strict-full`**. If you use **`strict-effect`**, it already extends **`strict-full`** and keeps the previous combined behavior. Otherwise compose **`strict`** with **`strict-drizzle`**, **`strict-next`** (or **`strict-web`**), and **`effect-observability`** as needed. See [CHANGELOG.md](CHANGELOG.md).
+
 ## Preset strategy
 
-- `strict` is the default baseline for TypeScript, the full anti-slop ruleset, and the shipped stack guardrails.
-- `strict` now includes Drizzle, Next App Router, and Effect discipline by default.
-- Packs remain modular internally so consumers can still extend narrower presets like `strict-drizzle` directly when needed.
+- **`strict`** and **`recommended`** are the default: **TypeScript-only** strictness (`strict-core` + `strict-runtime` + `strict-tests`, same as **`strict-ts`**). No React, Drizzle, or Effect rules unless you add them.
+- **`strict-full`** composes `strict-ts` with **`strict-drizzle`**, **`strict-web`** (Next App Router and React), and **`effect-observability`**. Use it when you want the full Rika stack in one extend.
+- **`strict-next`** is a thin alias of **`strict-web`**. Compose **`strict`** + **`strict-next`** for Next-only frontends.
+- **`strict-effect`** extends **`strict-full`** for backward compatibility with prior configs that expected the full bundle under a single alias.
+- Opt in individually: add **`strict-drizzle`**, **`strict-web`**, or **`effect-observability`** after **`strict`** when only part of the stack applies.
 
-Example (opt into Effect rules):
+Example (Next frontend only):
 
 ```json
 {
@@ -50,33 +56,85 @@ Example (opt into Effect rules):
 	"options": {
 		"typeAware": true
 	},
-	"extends": ["./node_modules/@rikalabs/oxlint-standards/presets/strict-effect.json"],
+	"extends": [
+		"./node_modules/@rikalabs/oxlint-standards/presets/strict.json",
+		"./node_modules/@rikalabs/oxlint-standards/presets/strict-next.json"
+	],
 	"jsPlugins": ["@rikalabs/oxlint-standards/plugin"]
 }
 ```
 
-If you only want the Drizzle pack without the full baseline, extend `strict-drizzle` directly.
+Example (opt into Drizzle + Effect, no Next):
+
+```json
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"options": {
+		"typeAware": true
+	},
+	"extends": [
+		"./node_modules/@rikalabs/oxlint-standards/presets/strict.json",
+		"./node_modules/@rikalabs/oxlint-standards/presets/strict-drizzle.json",
+		"./node_modules/@rikalabs/oxlint-standards/presets/effect-observability.json"
+	],
+	"jsPlugins": ["@rikalabs/oxlint-standards/plugin"]
+}
+```
+
+Example (full stack in one preset):
+
+```json
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"options": {
+		"typeAware": true
+	},
+	"extends": ["./node_modules/@rikalabs/oxlint-standards/presets/strict-full.json"],
+	"jsPlugins": ["@rikalabs/oxlint-standards/plugin"]
+}
+```
+
+You can also extend **`strict-drizzle`** or **`strict-web`** alone on top of **`strict`** if you are incrementally adopting rules.
+
+### Less verbose explicit returns
+
+- **`typescript-hard-mode`** enables both **`typescript/explicit-function-return-type`** and **`typescript/explicit-module-boundary-types`**. If boundary types are enough, use **`strict-ts-boundaries`** (same as `strict-ts` but **`typescript/explicit-function-return-type`** is off) or compose from **`typescript-hard-mode-boundaries-only`** when building a custom preset chain.
+
+### Threshold overrides (in `strict-core`)
+
+`strict-core` applies file-scoped **overrides** to reduce noise without dropping rules globally:
+
+| Area | Globs | What changes |
+| --- | --- | --- |
+| Tests | `**/*.{test,spec}.{ts,tsx,mts,cts}`, `**/__tests__/**/*` | `eslint/no-magic-numbers` off; `max-lines-per-function` max 120; `complexity` max 20 |
+| Scripts and config | `**/scripts/**`, `**/*.config.*`, `**/tools/**` | `eslint/no-console` off |
+| UI trees | `**/components/**`, `**/app/**` (jsx/tsx) | `max-lines-per-function` max 120; `complexity` max 15 |
 
 ## Presets
 
 1. `core-clean`
 2. `typescript-hard-mode`
-3. `imports-hygiene`
-4. `promise-safety`
-5. `naming-discipline`
-6. `effect-runtime`
-7. `effect-error-model`
-8. `effect-composition`
-9. `effect-observability`
-10. `strict-core`
-11. `strict-runtime`
-12. `strict-drizzle`
-13. `strict-web`
-14. `strict-tests`
-15. `strict-effect` (compatibility alias)
-16. `strict`
+3. `typescript-hard-mode-boundaries-only` (like `typescript-hard-mode` but **`typescript/explicit-function-return-type`** off)
+4. `imports-hygiene`
+5. `promise-safety`
+6. `naming-discipline`
+7. `effect-runtime`
+8. `effect-error-model`
+9. `effect-composition`
+10. `effect-observability`
+11. `strict-core`
+12. `strict-runtime`
+13. `strict-drizzle`
+14. `strict-web`
+15. `strict-next` (alias of `strict-web`)
+16. `strict-tests`
+17. `strict-ts` (same layers as `strict`: `strict-core` + `strict-runtime` + `strict-tests`)
+18. `strict-ts-boundaries` (like `strict-ts` but **`typescript/explicit-function-return-type`** off)
+19. `strict` (default TypeScript-only baseline; alias chain: `strict-ts`)
+20. `strict-full` (`strict-ts` + `strict-drizzle` + `strict-web` + `effect-observability`)
+21. `strict-effect` (compatibility alias: extends `strict-full`)
 
-Also available: `recommended` (an alias of `strict`).
+Also available: `recommended` (alias of `strict`), `recommended-ts` (alias of `strict`).
 
 ## Custom rules
 
@@ -138,7 +196,7 @@ Default strict custom rules include:
 - `@rikalabs/no-placeholder-tests`
 - `@rikalabs/no-mock-only-tests`
  
-Effect rules included in `strict` also include:
+Effect rules included when you extend **`strict-full`** or **`effect-observability`** also include:
 
 - `@rikalabs/effect-no-or-die`
 - `@rikalabs/effect-catch-handler-must-use-error`
@@ -161,7 +219,7 @@ Effect rules included in `strict` also include:
 | Tests with placeholders or only mocks | `jest/expect-expect`, `jest/no-standalone-expect`, `@rikalabs/no-placeholder-tests`, `@rikalabs/no-mock-only-tests` |
 | Security / secrets / SQL string building | `@rikalabs/no-hardcoded-secrets`, `@rikalabs/no-sql-string-concat` |
 
-Explicit non-goals in `strict` v1:
+Explicit non-goals in the TypeScript-only default (`strict`) v1:
 
 - no project-specific banned API inventories
 - no deprecated-API catalog
@@ -187,3 +245,5 @@ bun run check:builtins
 bun install
 bun run check
 ```
+
+Publishing is automated: create a [GitHub release](https://github.com/Rika-Labs/oxlint-standards/releases) from a version tag (for example `v0.4.0`). The [Publish workflow](.github/workflows/publish.yml) runs tests and publishes `@rikalabs/oxlint-standards` to npm when the release is published.
