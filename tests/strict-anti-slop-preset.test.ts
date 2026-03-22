@@ -30,12 +30,18 @@ describe("strict anti-slop preset coverage", () => {
 		expect(antiSlop.rules?.["@rikalabs/no-hardcoded-secrets"]).toBe("error");
 	});
 
-	it("ships test-only anti-pattern rules through strict-tests", () => {
+	it("ships test-only anti-pattern rules through strict-tests (Vitest-first)", () => {
 		const strictTests = readPreset("strict-tests");
 
-		expect(strictTests.rules?.["jest/expect-expect"]).toBe("error");
-		expect(strictTests.rules?.["jest/no-standalone-expect"]).toBe("error");
+		expect(strictTests.rules?.["vitest/no-conditional-tests"]).toBe("error");
 		expect(strictTests.rules?.["@rikalabs/no-placeholder-tests"]).toBe("error");
 		expect(strictTests.rules?.["@rikalabs/no-mock-only-tests"]).toBe("error");
+	});
+
+	it("strict-tests-jest adds Jest rules on top of strict-tests", () => {
+		const jestPack = readPreset("strict-tests-jest");
+
+		expect(jestPack.rules?.["jest/expect-expect"]).toBe("error");
+		expect(jestPack.rules?.["jest/no-standalone-expect"]).toBe("error");
 	});
 });

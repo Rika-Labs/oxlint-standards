@@ -137,4 +137,18 @@ describe("preset boundaries", () => {
 
 		expect(next.extends).toEqual(["./strict-web.json"]);
 	});
+
+	it("strict-tests is Vitest-first without Jest rules", () => {
+		const t = readPreset("strict-tests");
+
+		expect(t.rules?.["jest/expect-expect"]).toBeUndefined();
+		expect(t.rules?.["vitest/no-conditional-tests"]).toBe("error");
+	});
+
+	it("strict-tests-jest extends strict-tests with Jest rules", () => {
+		const j = readPreset("strict-tests-jest");
+
+		expect(j.extends).toEqual(["./strict-tests.json"]);
+		expect(j.rules?.["jest/valid-expect"]).toBe("error");
+	});
 });

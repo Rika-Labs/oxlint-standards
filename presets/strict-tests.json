@@ -1,16 +1,6 @@
 {
-	"plugins": ["jest", "vitest", "jsdoc"],
+	"plugins": ["vitest", "jsdoc"],
 	"rules": {
-		"jest/expect-expect": "error",
-		"jest/no-focused-tests": "error",
-		"jest/no-disabled-tests": "error",
-		"jest/no-standalone-expect": "error",
-		"jest/prefer-hooks-in-order": "off",
-		"jest/prefer-mock-promise-shorthand": "off",
-		"jest/prefer-each": "off",
-		"jest/prefer-spy-on": "off",
-		"jest/valid-expect": "error",
-		"jest/valid-title": "error",
 		"vitest/no-conditional-tests": "error",
 		"vitest/no-import-node-test": "error",
 		"vitest/prefer-called-once": "error",

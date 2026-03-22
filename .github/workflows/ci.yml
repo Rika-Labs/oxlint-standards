@@ -18,3 +18,12 @@ jobs:
       - run: bun run build
       - run: bun test
       - run: bun run check:builtins
+
+  smoke-consumer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - run: bun run build
+      - run: cd examples/minimal-consumer && bun install --frozen-lockfile && bun run lint

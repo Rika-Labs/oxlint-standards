@@ -1,0 +1,14 @@
+{
+	"name": "@rikalabs/oxlint-standards-smoke-minimal-consumer",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"lint": "oxlint -c oxlint.smoke.json ."
+	},
+	"devDependencies": {
+		"@rikalabs/oxlint-standards": "file:../..",
+		"oxlint": "^1.38.0",
+		"oxlint-tsgolint": "^0.17.0",
+		"typescript": "^5.9.3"
+	}
+}

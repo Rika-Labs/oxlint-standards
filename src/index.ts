@@ -15,6 +15,7 @@ export const presetNames = [
 	"strict-drizzle",
 	"strict-web",
 	"strict-tests",
+	"strict-tests-jest",
 	"strict-effect",
 	"strict",
 	"recommended",

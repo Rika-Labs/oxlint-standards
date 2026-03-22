@@ -21,6 +21,10 @@ bun add -d @rikalabs/oxlint-standards oxlint oxlint-tsgolint
 
 `strict` depends on type-aware `typescript/*` rules, so consuming projects must enable root-level `options.typeAware`.
 
+## Migrating from ESLint
+
+Use [**@oxlint/migrate**](https://github.com/oxc-project/oxlint-migrate) to translate an existing ESLint configuration. Then add `extends` pointing at this package’s presets and declare `jsPlugins` in the root `.oxlintrc.json` as shown below.
+
 ## Use in `.oxlintrc.json`
 
 ```json
@@ -47,6 +51,12 @@ Version **0.4.0** makes **`strict`** / **`recommended`** TypeScript-only. If you
 - **`strict-next`** is a thin alias of **`strict-web`**. Compose **`strict`** + **`strict-next`** for Next-only frontends.
 - **`strict-effect`** extends **`strict-full`** for backward compatibility with prior configs that expected the full bundle under a single alias.
 - Opt in individually: add **`strict-drizzle`**, **`strict-web`**, or **`effect-observability`** after **`strict`** when only part of the stack applies.
+
+### Tests: Vitest, Bun, and Jest
+
+- **`strict-tests`** is **Vitest-first**: it enables **`vitest/*`** rules, **jsdoc** checks, and **`@rikalabs/no-placeholder-tests`** / **`@rikalabs/no-mock-only-tests`**. It does **not** load the Jest plugin by default.
+- **`bun:test`** (Bun’s built-in runner) uses `import { … } from "bun:test"`. Oxlint’s Vitest rules apply where the linter matches test patterns; behavior can differ from running Vitest’s own CLI—treat mismatches as documentation or config gaps.
+- **`strict-tests-jest`** extends **`strict-tests`** and adds **Jest** plugin rules for codebases that still use Jest.
 
 Example (Next frontend only):
 
@@ -127,12 +137,13 @@ You can also extend **`strict-drizzle`** or **`strict-web`** alone on top of **`
 13. `strict-drizzle`
 14. `strict-web`
 15. `strict-next` (alias of `strict-web`)
-16. `strict-tests`
-17. `strict-ts` (same layers as `strict`: `strict-core` + `strict-runtime` + `strict-tests`)
-18. `strict-ts-boundaries` (like `strict-ts` but **`typescript/explicit-function-return-type`** off)
-19. `strict` (default TypeScript-only baseline; alias chain: `strict-ts`)
-20. `strict-full` (`strict-ts` + `strict-drizzle` + `strict-web` + `effect-observability`)
-21. `strict-effect` (compatibility alias: extends `strict-full`)
+16. `strict-tests` (Vitest + jsdoc + custom test rules; no Jest plugin)
+17. `strict-tests-jest` (extends `strict-tests` with Jest plugin rules)
+18. `strict-ts` (same layers as `strict`: `strict-core` + `strict-runtime` + `strict-tests`)
+19. `strict-ts-boundaries` (like `strict-ts` but **`typescript/explicit-function-return-type`** off)
+20. `strict` (default TypeScript-only baseline; alias chain: `strict-ts`)
+21. `strict-full` (`strict-ts` + `strict-drizzle` + `strict-web` + `effect-observability`)
+22. `strict-effect` (compatibility alias: extends `strict-full`)
 
 Also available: `recommended` (alias of `strict`), `recommended-ts` (alias of `strict`).
 
@@ -216,7 +227,7 @@ Effect rules included when you extend **`strict-full`** or **`effect-observabili
 | Comments / debug residue / AI narration | `@rikalabs/no-ai-debt-comments`, `@rikalabs/no-tutorial-comments`, `@rikalabs/no-commented-out-code`, `@rikalabs/no-debug-residue-filenames`, `eslint/no-warning-comments`, `eslint/no-debugger`, `eslint/no-console` |
 | TypeScript escape hatches | `typescript/no-explicit-any`, `typescript/no-non-null-assertion`, `typescript/no-unnecessary-type-assertion`, `@rikalabs/no-double-type-assertion`, `@rikalabs/no-as-never`, `@rikalabs/no-redundant-const-assertion`, `typescript/consistent-type-definitions` |
 | Naming / readability / structure | `@rikalabs/no-vague-verbs`, `@rikalabs/no-low-signal-public-names`, `@rikalabs/no-low-signal-variable-names`, `@rikalabs/no-generic-module-names`, `@rikalabs/no-standalone-classes`, `eslint/max-params`, `eslint/max-depth`, `eslint/max-lines-per-function`, `eslint/complexity`, `eslint/no-nested-ternary` |
-| Tests with placeholders or only mocks | `jest/expect-expect`, `jest/no-standalone-expect`, `@rikalabs/no-placeholder-tests`, `@rikalabs/no-mock-only-tests` |
+| Tests with placeholders or only mocks | `vitest/*` (default), optional Jest rules via **`strict-tests-jest`**, `@rikalabs/no-placeholder-tests`, `@rikalabs/no-mock-only-tests` |
 | Security / secrets / SQL string building | `@rikalabs/no-hardcoded-secrets`, `@rikalabs/no-sql-string-concat` |
 
 Explicit non-goals in the TypeScript-only default (`strict`) v1:
@@ -247,3 +258,5 @@ bun run check
 ```
 
 Publishing is automated: create a [GitHub release](https://github.com/Rika-Labs/oxlint-standards/releases) from a version tag (for example `v0.4.0`). The [Publish workflow](.github/workflows/publish.yml) runs tests and publishes `@rikalabs/oxlint-standards` to npm when the release is published.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for how to change rules and presets. The [minimal consumer example](examples/minimal-consumer/) mirrors npm-style `extends` (config in [`oxlint.smoke.json`](examples/minimal-consumer/oxlint.smoke.json) so it does not conflict with a parent `.oxlintrc.json`) and is exercised in CI.
