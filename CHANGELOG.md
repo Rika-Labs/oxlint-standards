@@ -33,6 +33,17 @@
 
 - **`strict-effect`** now extends **`strict-full`** (keeps the old combined stack for consumers who used that entry).
 
+## 0.3.0 - 2026-03-20
+
+### Removed
+
+- Nine built-in rules that targeted legacy or redundant patterns: CommonJS/AMD imports, webpack loader syntax, Node CJS-only APIs, **`eslint/no-throw-literal`** (covered by **`typescript/only-throw-error`**), **`oxc/no-const-enum`**, **`typescript/no-unsafe-enum-comparison`**. See [#7](https://github.com/Rika-Labs/oxlint-standards/pull/7).
+
+### Fixed
+
+- Ensure the plugin build works for **git-based** installs (`prepare` / `dist`).
+- **Strict Effect** preset linting in helper files.
+
 ## 0.2.0 - 2026-03-19
 
 ### Added
@@ -43,4 +54,3 @@
 ### Fixed
 
 - Improve anti-slop false-positive heuristics to reduce noise in rule reporting.
-
