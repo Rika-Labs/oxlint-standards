@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.4.1 - 2026-03-22
+
+### Added
+
+- **`strict-tests-jest`**: opt-in Jest rules on top of Vitest-first **`strict-tests`**.
+- [**CONTRIBUTING.md**](CONTRIBUTING.md) and npm **`files`** entry for it.
+- [**examples/minimal-consumer/**](examples/minimal-consumer/) smoke project (`oxlint.smoke.json`) and CI **`smoke-consumer`** job.
+
+### Changed
+
+- **`strict-tests`** is **Vitest-first** (vitest + jsdoc + custom test rules); Jest plugin removed from the default preset.
+
+### Documentation
+
+- README: Vitest/Bun/Jest preset notes, ESLint migration pointer (**@oxlint/migrate**), simplified **`strict-effect`** description; removed 0.3.x upgrade section.
+
 ## 0.4.0 - 2026-03-22
 
 ### Breaking

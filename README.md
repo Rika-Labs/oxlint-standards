@@ -253,6 +253,6 @@ bun install
 bun run check
 ```
 
-Publishing is automated: create a [GitHub release](https://github.com/Rika-Labs/oxlint-standards/releases) from a version tag (for example `v0.4.0`). The [Publish workflow](.github/workflows/publish.yml) runs tests and publishes `@rikalabs/oxlint-standards` to npm when the release is published.
+Publishing is automated: create a [GitHub release](https://github.com/Rika-Labs/oxlint-standards/releases) from a version tag (for example `v0.4.1`). The [Publish workflow](.github/workflows/publish.yml) runs tests and publishes `@rikalabs/oxlint-standards` to npm when the release is published.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for how to change rules and presets. The [minimal consumer example](examples/minimal-consumer/) mirrors npm-style `extends` (config in [`oxlint.smoke.json`](examples/minimal-consumer/oxlint.smoke.json) so it does not conflict with a parent `.oxlintrc.json`) and is exercised in CI.
