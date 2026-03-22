@@ -40,16 +40,12 @@ Use [**@oxlint/migrate**](https://github.com/oxc-project/oxlint-migrate) to tran
 
 `jsPlugins` must be declared by the consuming project because Oxlint currently only merges `rules`, `plugins`, and `overrides` through `extends`, and `options.typeAware` must live in the root config.
 
-## Upgrading from 0.3.x
-
-Version **0.4.0** makes **`strict`** / **`recommended`** TypeScript-only. If you still need Drizzle, Next, and Effect rules in one preset, switch your `extends` to **`strict-full`**. If you use **`strict-effect`**, it already extends **`strict-full`** and keeps the previous combined behavior. Otherwise compose **`strict`** with **`strict-drizzle`**, **`strict-next`** (or **`strict-web`**), and **`effect-observability`** as needed. See [CHANGELOG.md](CHANGELOG.md).
-
 ## Preset strategy
 
 - **`strict`** and **`recommended`** are the default: **TypeScript-only** strictness (`strict-core` + `strict-runtime` + `strict-tests`, same as **`strict-ts`**). No React, Drizzle, or Effect rules unless you add them.
 - **`strict-full`** composes `strict-ts` with **`strict-drizzle`**, **`strict-web`** (Next App Router and React), and **`effect-observability`**. Use it when you want the full Rika stack in one extend.
 - **`strict-next`** is a thin alias of **`strict-web`**. Compose **`strict`** + **`strict-next`** for Next-only frontends.
-- **`strict-effect`** extends **`strict-full`** for backward compatibility with prior configs that expected the full bundle under a single alias.
+- **`strict-effect`** extends **`strict-full`** (same rules as **`strict-full`** in one preset name).
 - Opt in individually: add **`strict-drizzle`**, **`strict-web`**, or **`effect-observability`** after **`strict`** when only part of the stack applies.
 
 ### Tests: Vitest, Bun, and Jest
