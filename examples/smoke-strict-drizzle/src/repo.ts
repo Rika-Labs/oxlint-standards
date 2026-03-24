@@ -25,6 +25,12 @@ export const profileAuditEntries = pgTable("profile_audit_entries", {
 
 export type UserProfileRecord = typeof userProfiles.$inferSelect;
 
+type UserProfileSnapshot = {
+	readonly displayName: string;
+	readonly id: string;
+	readonly teamId: string;
+};
+
 type SelectQuery<TSelection> = {
 	readonly where: (...filters: readonly [SQL]) => Promise<ReadonlyArray<TSelection>>;
 };
@@ -53,7 +59,7 @@ type UserProfileDatabase = {
 export const readUserProfile = async (
 	database: UserProfileDatabase,
 	userId: string,
-): Promise<UserProfileRecord | undefined> => {
+): Promise<UserProfileSnapshot | undefined> => {
 	const matchingProfiles = await database
 		.select<UserProfileRecord>()
 		.from(userProfiles)
