@@ -1,6 +1,8 @@
 {
 	"plugins": ["node"],
 	"rules": {
-		"node/no-process-env": "error"
+		"node/no-process-env": "error",
+		"node/no-path-concat": "error",
+		"node/handle-callback-err": "error"
 	}
 }

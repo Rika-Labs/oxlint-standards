@@ -13,6 +13,12 @@ This package ships two things:
 - prefer Oxlint built-ins first, custom rules second
 - keep custom rules architecture-agnostic for open source reuse
 
+## Baseline policy
+
+`core-clean` enables every Oxlint builtin category at `error`: `correctness`, `suspicious`, `pedantic`, `perf`, `style`, `restriction`, and `nursery`.
+
+The package keeps explicit rule entries where we need non-default options or where the platform baseline depends on plugin-specific rules that category toggles do not cover cleanly. This keeps the default strict presets close to the production platform config while still making the intentional exceptions readable in preset JSON.
+
 ## Install
 
 ```bash
@@ -138,8 +144,11 @@ You can also extend **`strict-drizzle`** or **`strict-web`** alone on top of **`
 18. `strict-ts` (same layers as `strict`: `strict-core` + `strict-runtime` + `strict-tests`)
 19. `strict-ts-boundaries` (like `strict-ts` but **`typescript/explicit-function-return-type`** off)
 20. `strict` (default TypeScript-only baseline; alias chain: `strict-ts`)
-21. `strict-full` (`strict-ts` + `strict-drizzle` + `strict-web` + `effect-observability`)
+21. `strict-full` (`strict-ts` + `strict-drizzle` + `strict-web` + `strict-zustand` + `strict-electrobun` + `strict-bun` + `effect-observability`)
 22. `strict-effect` (compatibility alias: extends `strict-full`)
+23. `strict-zustand` (Zustand state management guardrails)
+24. `strict-electrobun` (Electrobun desktop app boundary rules)
+25. `strict-bun` (Bun runtime-specific rules for shared package safety)
 
 Also available: `recommended` (alias of `strict`), `recommended-ts` (alias of `strict`).
 
@@ -212,6 +221,25 @@ Effect rules included when you extend **`strict-full`** or **`effect-observabili
 - `@rikalabs/effect-prefer-gen-over-flatmap-chain`
 - `@rikalabs/effect-no-effect-return-in-map`
 - `@rikalabs/effect-require-span-name`
+- `@rikalabs/effect-no-mutable-ref-in-gen`
+
+`strict-web` also adds:
+
+- `@rikalabs/react-no-inline-effect-run`
+
+`strict-zustand` adds:
+
+- `@rikalabs/zustand-no-store-outside-store-dir`
+- `@rikalabs/zustand-no-direct-set-in-components`
+
+`strict-electrobun` adds:
+
+- `@rikalabs/electrobun-no-rpc-in-domain`
+- `@rikalabs/electrobun-no-process-global-in-renderer`
+
+`strict-bun` adds:
+
+- `@rikalabs/bun-no-bun-specific-in-shared`
 
 ## Coverage map
 
@@ -225,6 +253,11 @@ Effect rules included when you extend **`strict-full`** or **`effect-observabili
 | Naming / readability / structure | `@rikalabs/no-vague-verbs`, `@rikalabs/no-low-signal-public-names`, `@rikalabs/no-low-signal-variable-names`, `@rikalabs/no-generic-module-names`, `@rikalabs/no-standalone-classes`, `eslint/max-params`, `eslint/max-depth`, `eslint/max-lines-per-function`, `eslint/complexity`, `eslint/no-nested-ternary` |
 | Tests with placeholders or only mocks | `vitest/*` (default), optional Jest rules via **`strict-tests-jest`**, `@rikalabs/no-placeholder-tests`, `@rikalabs/no-mock-only-tests` |
 | Security / secrets / SQL string building | `@rikalabs/no-hardcoded-secrets`, `@rikalabs/no-sql-string-concat` |
+| Electrobun boundary safety | `@rikalabs/electrobun-no-rpc-in-domain`, `@rikalabs/electrobun-no-process-global-in-renderer` |
+| Zustand state management | `@rikalabs/zustand-no-store-outside-store-dir`, `@rikalabs/zustand-no-direct-set-in-components` |
+| Bun runtime boundaries | `@rikalabs/bun-no-bun-specific-in-shared` |
+| React + Effect integration | `@rikalabs/react-no-inline-effect-run` |
+| Effect mutable state in generators | `@rikalabs/effect-no-mutable-ref-in-gen` |
 
 Explicit non-goals in the TypeScript-only default (`strict`) v1:
 
@@ -253,6 +286,16 @@ bun install
 bun run check
 ```
 
-Publishing is automated: create a [GitHub release](https://github.com/Rika-Labs/oxlint-standards/releases) from a version tag (for example `v0.4.1`). The [Publish workflow](.github/workflows/publish.yml) runs tests and publishes `@rikalabs/oxlint-standards` to npm when the release is published.
+Publishing is automated: create a [GitHub release](https://github.com/Rika-Labs/oxlint-standards/releases) from a version tag (for example `v0.5.0`). The [Publish workflow](.github/workflows/publish.yml) runs tests and publishes `@rikalabs/oxlint-standards` to npm when the release is published.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for how to change rules and presets. The [minimal consumer example](examples/minimal-consumer/) mirrors npm-style `extends` (config in [`oxlint.smoke.json`](examples/minimal-consumer/oxlint.smoke.json) so it does not conflict with a parent `.oxlintrc.json`) and is exercised in CI.
+
+Additional shadow smoke repos exercise preset composition with both passing source files and failing fixtures:
+
+- [`examples/smoke-strict-full/`](examples/smoke-strict-full/)
+- [`examples/smoke-strict-web/`](examples/smoke-strict-web/)
+- [`examples/smoke-strict-drizzle/`](examples/smoke-strict-drizzle/)
+- [`examples/smoke-effect/`](examples/smoke-effect/)
+- [`examples/smoke-strict-tests/`](examples/smoke-strict-tests/)
+
+Each smoke repo runs `bun run lint` against `src/` and `bun run lint:fixtures` against `fixtures/`, asserting that the preset under test still reports the expected minimum number of failures.

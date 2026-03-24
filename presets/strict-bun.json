@@ -1,0 +1,5 @@
+{
+	"rules": {
+		"@rikalabs/bun-no-bun-specific-in-shared": "error"
+	}
+}

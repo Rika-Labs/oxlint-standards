@@ -1,0 +1,17 @@
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"options": {
+		"typeAware": true
+	},
+	"globals": {
+		"describe": "readonly",
+		"expect": "readonly",
+		"it": "readonly"
+	},
+	"extends": [
+		"./node_modules/@rikalabs/oxlint-standards/presets/strict.json",
+		"./node_modules/@rikalabs/oxlint-standards/presets/strict-tests.json"
+	],
+	"jsPlugins": ["@rikalabs/oxlint-standards/plugin"],
+	"ignorePatterns": ["node_modules", "fixtures"]
+}

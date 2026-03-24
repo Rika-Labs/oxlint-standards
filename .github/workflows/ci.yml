@@ -21,9 +21,21 @@ jobs:
 
   smoke-consumer:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        example:
+          - minimal-consumer
+          - smoke-strict-full
+          - smoke-strict-web
+          - smoke-strict-drizzle
+          - smoke-effect
+          - smoke-strict-tests
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
       - run: bun run build
-      - run: cd examples/minimal-consumer && bun install --frozen-lockfile && bun run lint
+      - run: cd examples/${{ matrix.example }} && bun install --frozen-lockfile && bun run lint
+      - name: Assert fixture failures
+        if: matrix.example != 'minimal-consumer'
+        run: cd examples/${{ matrix.example }} && bun run lint:fixtures

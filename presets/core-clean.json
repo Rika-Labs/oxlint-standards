@@ -3,7 +3,11 @@
 	"categories": {
 		"correctness": "error",
 		"suspicious": "error",
-		"perf": "error"
+		"pedantic": "error",
+		"perf": "error",
+		"style": "error",
+		"restriction": "error",
+		"nursery": "error"
 	},
 	"rules": {
 		"oxc/no-barrel-file": [
@@ -12,13 +16,39 @@
 				"threshold": 0
 			}
 		],
+		"oxc/no-async-await": "off",
+		"oxc/no-accumulating-spread": "error",
+		"eslint/eqeqeq": ["error", "always"],
+		"eslint/func-names": "off",
+		"eslint/no-undefined": "off",
+		"eslint/sort-imports": "off",
+		"eslint/sort-keys": "off",
 		"import/no-cycle": "error",
 		"import/no-self-import": "error",
 		"import/no-duplicates": "error",
+		"import/group-exports": "off",
+		"import/no-default-export": "off",
+		"import/no-named-export": "off",
+		"import/no-relative-parent-imports": "off",
+		"import/exports-last": "off",
+		"import/prefer-default-export": "off",
+		"import/consistent-type-specifier-style": "off",
+		"typescript/prefer-readonly-parameter-types": "off",
 		"promise/no-callback-in-promise": "error",
 		"promise/no-return-in-finally": "error",
 		"promise/no-multiple-resolved": "error",
 		"unicorn/no-abusive-eslint-disable": "error",
-		"unicorn/consistent-function-scoping": "error"
+		"unicorn/consistent-function-scoping": "error",
+		"unicorn/filename-case": "off",
+		"unicorn/no-array-for-each": "error",
+		"unicorn/no-null": "off",
+		"unicorn/error-message": "error",
+		"unicorn/catch-error-name": ["error", { "name": "error" }],
+		"unicorn/throw-new-error": "error",
+		"unicorn/prefer-node-protocol": "error",
+		"unicorn/prefer-module": "error",
+		"unicorn/numeric-separators-style": "error",
+		"unicorn/prefer-structured-clone": "error",
+		"unicorn/prefer-string-replace-all": "error"
 	}
 }

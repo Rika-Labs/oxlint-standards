@@ -76,6 +76,13 @@ import { noHardcodedSecretsRule } from "./rules/no-hardcoded-secrets.js";
 import { noSqlStringConcatRule } from "./rules/no-sql-string-concat.js";
 import { noPlaceholderTestsRule } from "./rules/no-placeholder-tests.js";
 import { noMockOnlyTestsRule } from "./rules/no-mock-only-tests.js";
+import { electrobunNoRpcInDomainRule } from "./rules/electrobun-no-rpc-in-domain.js";
+import { electrobunNoProcessGlobalInRendererRule } from "./rules/electrobun-no-process-global-in-renderer.js";
+import { zustandNoStoreOutsideStoreDirRule } from "./rules/zustand-no-store-outside-store-dir.js";
+import { zustandNoDirectSetInComponentsRule } from "./rules/zustand-no-direct-set-in-components.js";
+import { bunNoBunSpecificInSharedRule } from "./rules/bun-no-bun-specific-in-shared.js";
+import { effectNoMutableRefInGenRule } from "./rules/effect-no-mutable-ref-in-gen.js";
+import { reactNoInlineEffectRunRule } from "./rules/react-no-inline-effect-run.js";
 import type { RuleModule } from "./types.js";
 
 export const customRules: Readonly<Record<string, RuleModule>> = {
@@ -157,6 +164,13 @@ export const customRules: Readonly<Record<string, RuleModule>> = {
 	"no-sql-string-concat": noSqlStringConcatRule,
 	"no-placeholder-tests": noPlaceholderTestsRule,
 	"no-mock-only-tests": noMockOnlyTestsRule,
+	"electrobun-no-rpc-in-domain": electrobunNoRpcInDomainRule,
+	"electrobun-no-process-global-in-renderer": electrobunNoProcessGlobalInRendererRule,
+	"zustand-no-store-outside-store-dir": zustandNoStoreOutsideStoreDirRule,
+	"zustand-no-direct-set-in-components": zustandNoDirectSetInComponentsRule,
+	"bun-no-bun-specific-in-shared": bunNoBunSpecificInSharedRule,
+	"effect-no-mutable-ref-in-gen": effectNoMutableRefInGenRule,
+	"react-no-inline-effect-run": reactNoInlineEffectRunRule,
 };
 
 const plugin = {

@@ -1,0 +1,6 @@
+{
+	"rules": {
+		"@rikalabs/zustand-no-store-outside-store-dir": "error",
+		"@rikalabs/zustand-no-direct-set-in-components": "error"
+	}
+}
