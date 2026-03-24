@@ -3,6 +3,9 @@
 		"./strict-ts.json",
 		"./strict-drizzle.json",
 		"./strict-web.json",
+		"./strict-zustand.json",
+		"./strict-electrobun.json",
+		"./strict-bun.json",
 		"./effect-observability.json"
 	]
 }

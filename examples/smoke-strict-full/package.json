@@ -1,0 +1,22 @@
+{
+	"name": "@rikalabs/oxlint-standards-smoke-strict-full",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"lint": "oxlint -c oxlint.smoke.json src/",
+		"lint:fixtures": "bun run scripts/assert-failures.ts"
+	},
+	"devDependencies": {
+		"@rikalabs/oxlint-standards": "file:../..",
+		"@types/react": "^19.0.0",
+		"oxlint": "^1.56.0",
+		"oxlint-tsgolint": "^0.17.0",
+		"typescript": "^5.9.3"
+	},
+	"dependencies": {
+		"drizzle-orm": "^0.45.0",
+		"effect": "^3.21.0",
+		"react": "^19.0.0",
+		"zustand": "^5.0.8"
+	}
+}

@@ -5,7 +5,10 @@
 		"promise/no-new-statics": "error",
 		"promise/param-names": "error",
 		"promise/valid-params": "error",
+		"promise/catch-or-return": "error",
+		"promise/always-return": "error",
 		"typescript/no-floating-promises": "error",
-		"typescript/promise-function-async": "error"
+		"typescript/promise-function-async": "error",
+		"typescript/return-await": ["error", "in-try-catch"]
 	}
 }

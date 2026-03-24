@@ -13,6 +13,8 @@
 		"typescript/switch-exhaustiveness-check": "error",
 		"typescript/explicit-function-return-type": "error",
 		"typescript/explicit-module-boundary-types": "error",
-		"typescript/no-import-type-side-effects": "error"
+		"typescript/no-import-type-side-effects": "error",
+		"typescript/unbound-method": "error",
+		"typescript/no-misused-spread": "error"
 	}
 }

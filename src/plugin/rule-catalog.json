@@ -388,5 +388,40 @@
 		"id": "@rikalabs/no-mock-only-tests",
 		"nearestBuiltIn": "jest/expect-expect",
 		"whyInsufficient": "Assertion presence checks do not detect tests that only configure mocks and spies without any meaningful assertion."
+	},
+	{
+		"id": "@rikalabs/electrobun-no-rpc-in-domain",
+		"nearestBuiltIn": "eslint/no-restricted-globals",
+		"whyInsufficient": "Built-in restricted globals cannot detect Electrobun RPC member expression chains scoped to domain file boundaries."
+	},
+	{
+		"id": "@rikalabs/electrobun-no-process-global-in-renderer",
+		"nearestBuiltIn": "node/no-process-env",
+		"whyInsufficient": "Built-in process env rules do not scope enforcement to Electrobun renderer directories or cover process.exit and other process methods."
+	},
+	{
+		"id": "@rikalabs/zustand-no-store-outside-store-dir",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no Zustand-aware rule for restricting store creation to dedicated store directories."
+	},
+	{
+		"id": "@rikalabs/zustand-no-direct-set-in-components",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no Zustand-aware rule for preventing direct setState calls in React components."
+	},
+	{
+		"id": "@rikalabs/bun-no-bun-specific-in-shared",
+		"nearestBuiltIn": "eslint/no-restricted-imports",
+		"whyInsufficient": "Built-in import restrictions cannot combine bun: protocol imports and Bun global member access detection scoped to shared packages."
+	},
+	{
+		"id": "@rikalabs/effect-no-mutable-ref-in-gen",
+		"nearestBuiltIn": "eslint/prefer-const",
+		"whyInsufficient": "Built-in const preference rules do not understand Effect.gen context where Ref should replace mutable variables."
+	},
+	{
+		"id": "@rikalabs/react-no-inline-effect-run",
+		"nearestBuiltIn": "none",
+		"whyInsufficient": "Oxlint has no rule detecting Effect runtime runners (runPromise, runSync) inside React component function bodies."
 	}
 ]

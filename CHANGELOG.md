@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.5.0 - 2026-03-24
+
+### Breaking
+
+- **`core-clean`** now enables all Oxlint builtin categories by default. The baseline keeps a narrow explicit off-list for legacy or style-noise rules, but consuming repos should expect stricter built-in coverage from **`strict`**, **`strict-ts`**, and **`strict-full`**.
+
+### Added
+
+- **`strict-zustand`**, **`strict-electrobun`**, and **`strict-bun`** opt-in presets.
+- New custom rules for Zustand, Electrobun, Bun shared-package boundaries, React/Effect integration, and Effect mutable state in generators.
+- Shadow smoke repos for **`strict-full`**, **`strict-web`**, **`strict-drizzle`**, **`effect-observability`**, and **`strict-tests`**, each with passing source and failing fixture assertions.
+
+### Changed
+
+- Expanded **`strict-web`** with broader React, a11y, and Next.js coverage while keeping modern JSX-runtime compatibility.
+- CI now runs the full smoke example matrix and asserts fixture failure counts for every non-minimal example.
+- Fixture smoke runners copy bad samples into a temporary non-`fixtures/` path so custom rules are exercised instead of being skipped by fixture/doc guards.
+
+### Documentation
+
+- README and CONTRIBUTING now document the all-categories baseline, the smoke matrix, and the release/verification flow for the new examples.
+
 ## 0.4.1 - 2026-03-22
 
 ### Added

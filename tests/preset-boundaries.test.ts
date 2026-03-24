@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 type PresetConfig = {
+	readonly categories?: Readonly<Record<string, string>>;
 	readonly extends?: ReadonlyArray<string>;
 	readonly rules?: Readonly<Record<string, unknown>>;
 };
@@ -67,6 +68,20 @@ describe("preset boundaries", () => {
 		expect(recommendedGraph.presetNames.has("strict-web")).toBe(false);
 	});
 
+	it("core-clean enables every builtin category at error", () => {
+		const coreClean = readPreset("core-clean");
+
+		expect(coreClean.categories).toEqual({
+			correctness: "error",
+			suspicious: "error",
+			pedantic: "error",
+			perf: "error",
+			style: "error",
+			restriction: "error",
+			nursery: "error",
+		});
+	});
+
 	it("includes drizzle and effect standards in strict-full", () => {
 		const fullGraph = readPresetGraph("strict-full");
 
@@ -108,6 +123,9 @@ describe("preset boundaries", () => {
 			"./strict-ts.json",
 			"./strict-drizzle.json",
 			"./strict-web.json",
+			"./strict-zustand.json",
+			"./strict-electrobun.json",
+			"./strict-bun.json",
 			"./effect-observability.json",
 		]);
 	});

@@ -1,0 +1,12 @@
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"options": {
+		"typeAware": true
+	},
+	"extends": [
+		"./node_modules/@rikalabs/oxlint-standards/presets/strict.json",
+		"./node_modules/@rikalabs/oxlint-standards/presets/effect-observability.json"
+	],
+	"jsPlugins": ["@rikalabs/oxlint-standards/plugin"],
+	"ignorePatterns": ["node_modules", "fixtures"]
+}

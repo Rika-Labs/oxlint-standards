@@ -25,6 +25,32 @@ Custom rules must not duplicate Oxlint built-ins. See **Built-in overlap policy*
 
 Preset JSON lives in [`presets/`](presets/). If you add or rename a preset, update [README.md](README.md) and any tests in [`tests/preset-boundaries.test.ts`](tests/preset-boundaries.test.ts). Add the name to [`src/index.ts`](src/index.ts) `presetNames` when it should be part of the public list.
 
-## Smoke example
+## Smoke examples
 
-[`examples/minimal-consumer/`](examples/minimal-consumer/) mirrors how a consuming repo depends on this package. CI runs `oxlint` there to catch publish path or config regressions. The example uses [`oxlint.smoke.json`](examples/minimal-consumer/oxlint.smoke.json) (not `.oxlintrc.json`) so the workspace root `oxlint .` does not try to merge a nested config with `options.typeAware`. Run `bun run lint` inside `examples/minimal-consumer`.
+[`examples/minimal-consumer/`](examples/minimal-consumer/) mirrors how a consuming repo depends on this package.
+
+The shadow smoke repos under [`examples/`](examples/) cover preset composition directly:
+
+- `smoke-strict-full`
+- `smoke-strict-web`
+- `smoke-strict-drizzle`
+- `smoke-effect`
+- `smoke-strict-tests`
+
+Each example uses [`oxlint.smoke.json`](examples/minimal-consumer/oxlint.smoke.json) instead of `.oxlintrc.json` so the workspace root `oxlint .` does not try to merge nested configs with `options.typeAware`.
+
+Verification flow:
+
+```bash
+cd examples/<example-name>
+bun install --frozen-lockfile
+bun run lint
+```
+
+Every non-minimal smoke repo also supports:
+
+```bash
+bun run lint:fixtures
+```
+
+That command copies the bad samples out of `fixtures/` before linting so custom rules that ignore fixture/doc paths still get exercised in CI.

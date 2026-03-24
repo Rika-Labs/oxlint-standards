@@ -4,6 +4,9 @@
 		"import/first": "error",
 		"import/no-absolute-path": "error",
 		"import/no-mutable-exports": "error",
+		"import/no-commonjs": "error",
+		"import/no-dynamic-require": "error",
+		"import/max-dependencies": ["error", { "max": 15 }],
 		"@rikalabs/no-import-then-reexport": "error"
 	}
 }

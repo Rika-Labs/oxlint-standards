@@ -1,0 +1,19 @@
+{
+	"name": "@rikalabs/oxlint-standards-smoke-strict-web",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"lint": "oxlint -c oxlint.smoke.json src/",
+		"lint:fixtures": "bun run scripts/assert-failures.ts"
+	},
+	"devDependencies": {
+		"@rikalabs/oxlint-standards": "file:../..",
+		"oxlint": "^1.56.0",
+		"oxlint-tsgolint": "^0.17.0",
+		"typescript": "^5.9.3",
+		"@types/react": "^19.0.0"
+	},
+	"dependencies": {
+		"react": "^19.0.0"
+	}
+}

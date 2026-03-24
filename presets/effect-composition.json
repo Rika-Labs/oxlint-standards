@@ -5,6 +5,7 @@
 		"@rikalabs/effect-no-effect-return-in-map": "error",
 		"@rikalabs/effect-no-tacit-usage": "error",
 		"@rikalabs/effect-no-fire-and-forget-fork": "error",
-		"@rikalabs/effect-no-looped-effects": "error"
+		"@rikalabs/effect-no-looped-effects": "error",
+		"@rikalabs/effect-no-mutable-ref-in-gen": "error"
 	}
 }

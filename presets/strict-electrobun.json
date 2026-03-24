@@ -1,0 +1,6 @@
+{
+	"rules": {
+		"@rikalabs/electrobun-no-rpc-in-domain": "error",
+		"@rikalabs/electrobun-no-process-global-in-renderer": "error"
+	}
+}
