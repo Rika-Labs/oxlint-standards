@@ -14,6 +14,7 @@ describe("strict anti-slop preset coverage", () => {
 		const strictCore = readPreset("strict-core");
 
 		expect(strictCore.rules?.["eslint/no-console"]).toBe("error");
+		expect(strictCore.rules?.["eslint/prefer-destructuring"]).toBeUndefined();
 		expect(strictCore.rules?.["eslint/no-warning-comments"]).toBe("error");
 		expect(strictCore.rules?.["eslint/max-params"]).toEqual(["error", 4]);
 		expect(strictCore.rules?.["typescript/consistent-type-definitions"]).toEqual(["error", "type"]);

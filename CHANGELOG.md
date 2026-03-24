@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.0 - 2026-03-24
+
+### Changed
+
+- **`strict-core`** does not set **`eslint/prefer-destructuring`**; the rule is not part of the preset.
+
 ## 0.5.0 - 2026-03-24
 
 ### Breaking
