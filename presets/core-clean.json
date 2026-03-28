@@ -39,6 +39,10 @@
 		"eslint/default-case": "error",
 		"eslint/no-unsafe-finally": "error",
 		"eslint/no-void": "error",
+		"eslint/no-script-url": "error",
+		"eslint/no-prototype-builtins": "error",
+		"unicorn/no-object-as-default-parameter": "error",
+		"unicorn/no-useless-fallback-in-spread": "error",
 		"import/no-cycle": "error",
 		"import/no-self-import": "error",
 		"import/no-duplicates": "error",
@@ -76,6 +80,7 @@
 		"unicorn/no-useless-switch-case": "error",
 		"unicorn/no-useless-undefined": "error",
 		"unicorn/no-useless-spread": "error",
+		"unicorn/no-document-cookie": "error",
 		"unicorn/new-for-builtins": "error",
 		"unicorn/no-instanceof-builtins": "error",
 		"unicorn/no-invalid-remove-event-listener": "error"
