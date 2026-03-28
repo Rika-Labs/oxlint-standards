@@ -15,6 +15,9 @@
 		"typescript/explicit-module-boundary-types": "error",
 		"typescript/no-import-type-side-effects": "error",
 		"typescript/unbound-method": "error",
-		"typescript/no-misused-spread": "error"
+		"typescript/no-misused-spread": "error",
+		"typescript/no-unnecessary-condition": "error",
+		"typescript/prefer-nullish-coalescing": "error",
+		"typescript/require-await": "error"
 	}
 }

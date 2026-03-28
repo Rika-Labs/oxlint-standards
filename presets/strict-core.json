@@ -19,7 +19,7 @@
 		"typescript/restrict-plus-operands": "error",
 		"typescript/no-confusing-void-expression": ["error", { "ignoreArrowShorthand": true }],
 		"typescript/no-confusing-non-null-assertion": "error",
-		"typescript/no-unnecessary-boolean-literal-compare": "error",
+		"typescript/no-unnecessary-boolean-literal-compare": "off",
 		"typescript/no-unnecessary-type-arguments": "error",
 		"typescript/no-unnecessary-type-constraint": "error",
 		"typescript/prefer-for-of": "error",
@@ -34,9 +34,11 @@
 		"promise/no-return-wrap": "error",
 		"eslint/array-callback-return": "error",
 		"eslint/no-useless-return": "error",
-		"eslint/no-await-in-loop": "error",
+		"eslint/no-await-in-loop": "off",
 		"eslint/no-param-reassign": "error",
 		"eslint/no-empty": "error",
+		"eslint/no-useless-catch": "error",
+		"eslint/no-empty-function": "error",
 		"eslint/require-yield": "off",
 		"eslint/no-console": "error",
 		"eslint/no-warning-comments": "error",
@@ -57,17 +59,11 @@
 		"eslint/prefer-object-has-own": "error",
 		"eslint/prefer-object-spread": "error",
 		"eslint/prefer-template": "error",
-		"eslint/max-params": ["error", 4],
-		"eslint/max-depth": ["error", 4],
-		"eslint/max-lines-per-function": [
-			"error",
-			{
-				"max": 50,
-				"skipBlankLines": true,
-				"skipComments": true
-			}
-		],
-		"eslint/complexity": ["error", 10],
+		"eslint/max-params": "off",
+		"eslint/max-depth": "off",
+		"eslint/max-lines-per-function": "off",
+		"eslint/complexity": "off",
+		"eslint/no-magic-numbers": "off",
 		"eslint/no-nested-ternary": "error",
 		"eslint/no-debugger": "error",
 		"eslint/no-eval": "error",
@@ -75,12 +71,6 @@
 		"eslint/no-script-url": "error",
 		"eslint/prefer-promise-reject-errors": "error",
 		"eslint/max-nested-callbacks": ["error", 4],
-		"eslint/no-magic-numbers": [
-			"error",
-			{
-				"ignore": [-1, 0, 1, 2]
-			}
-		],
 		"@rikalabs/no-silent-catch-fallback": "error",
 		"@rikalabs/no-runtime-compat-fallbacks": "error",
 		"@rikalabs/no-catch-return-error-object": "error",
@@ -99,44 +89,12 @@
 	"overrides": [
 		{
 			"files": [
-				"**/*.{test,spec}.{ts,tsx,mts,cts}",
-				"**/__tests__/**/*.{ts,tsx,mts,cts}"
-			],
-			"rules": {
-				"eslint/no-magic-numbers": "off",
-				"eslint/max-lines-per-function": [
-					"error",
-					{
-						"max": 120,
-						"skipBlankLines": true,
-						"skipComments": true
-					}
-				],
-				"eslint/complexity": ["error", 20]
-			}
-		},
-		{
-			"files": [
 				"**/scripts/**/*.{ts,tsx,mts,cts,mjs,cjs}",
 				"**/*.config.{ts,mts,cts,js,mjs,cjs}",
 				"**/tools/**/*.{ts,tsx,mts,cts}"
 			],
 			"rules": {
 				"eslint/no-console": "off"
-			}
-		},
-		{
-			"files": ["**/components/**/*.{tsx,jsx}", "**/app/**/*.{tsx,jsx}"],
-			"rules": {
-				"eslint/max-lines-per-function": [
-					"error",
-					{
-						"max": 120,
-						"skipBlankLines": true,
-						"skipComments": true
-					}
-				],
-				"eslint/complexity": ["error", 15]
 			}
 		}
 	]
