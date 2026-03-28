@@ -82,11 +82,22 @@ describe("preset boundaries", () => {
 		});
 	});
 
+	it("keeps effect-observability limited to observability concerns", () => {
+		const observabilityGraph = readPresetGraph("effect-observability");
+
+		expect(observabilityGraph.presetNames.has("effect-service-hygiene")).toBe(false);
+		expect(observabilityGraph.presetNames.has("effect-composition")).toBe(false);
+		expect(observabilityGraph.presetNames.has("effect-error-model")).toBe(false);
+		expect(observabilityGraph.presetNames.has("effect-runtime")).toBe(false);
+		expect(observabilityGraph.ruleNames).toEqual(new Set(["@rikalabs/effect-require-span-name"]));
+	});
+
 	it("includes drizzle and effect standards in strict-full", () => {
 		const fullGraph = readPresetGraph("strict-full");
 
 		expect(fullGraph.presetNames.has("strict-drizzle")).toBe(true);
 		expect(fullGraph.presetNames.has("strict-web")).toBe(true);
+		expect(fullGraph.presetNames.has("effect-service-hygiene")).toBe(true);
 		expect(fullGraph.presetNames.has("effect-observability")).toBe(true);
 		expect([...fullGraph.ruleNames].some(hasEffectRule)).toBe(true);
 		expect([...fullGraph.ruleNames].some(hasDrizzleRule)).toBe(true);
@@ -126,8 +137,18 @@ describe("preset boundaries", () => {
 			"./strict-zustand.json",
 			"./strict-electrobun.json",
 			"./strict-bun.json",
+			"./effect-service-hygiene.json",
 			"./effect-observability.json",
 		]);
+	});
+
+	it("anti-slop-aggressive extends anti-slop with the trimmed heuristics", () => {
+		const aggressive = readPreset("anti-slop-aggressive");
+
+		expect(aggressive.extends).toEqual(["./anti-slop.json"]);
+		expect(aggressive.rules?.["@rikalabs/no-single-use-trivial-helpers"]).toBe("error");
+		expect(aggressive.rules?.["@rikalabs/no-pass-through-intermediate-vars"]).toBe("error");
+		expect(aggressive.rules?.["@rikalabs/no-property-default-fallbacks"]).toBe("error");
 	});
 
 	it("strict-ts-boundaries turns off explicit-function-return-type", () => {

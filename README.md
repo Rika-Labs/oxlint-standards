@@ -49,10 +49,13 @@ Use [**@oxlint/migrate**](https://github.com/oxc-project/oxlint-migrate) to tran
 ## Preset strategy
 
 - **`strict`** and **`recommended`** are the default: **TypeScript-only** strictness (`strict-core` + `strict-runtime` + `strict-tests`, same as **`strict-ts`**). No React, Drizzle, or Effect rules unless you add them.
-- **`strict-full`** composes `strict-ts` with **`strict-drizzle`**, **`strict-web`** (Next App Router and React), and **`effect-observability`**. Use it when you want the full Rika stack in one extend.
+- **`strict-full`** composes `strict-ts` with **`strict-drizzle`**, **`strict-web`** (Next App Router and React), **`effect-service-hygiene`**, and **`effect-observability`**. Use it when you want the full Rika stack in one extend.
 - **`strict-next`** is a thin alias of **`strict-web`**. Compose **`strict`** + **`strict-next`** for Next-only frontends.
 - **`strict-effect`** extends **`strict-full`** (same rules as **`strict-full`** in one preset name).
-- Opt in individually: add **`strict-drizzle`**, **`strict-web`**, or **`effect-observability`** after **`strict`** when only part of the stack applies.
+- **`effect-observability`** is observability-only: it currently enforces span naming without bringing in the broader Effect runtime/service doctrine.
+- For the broader Effect stack, add **`effect-service-hygiene`** (which pulls in the runtime/composition/error-model chain) alongside **`effect-observability`**, or use **`strict-full`** / **`strict-effect`**.
+- **`anti-slop-aggressive`** is an opt-in extension for the more taste-heavy helper/fallback heuristics that are no longer part of the default anti-slop baseline.
+- Opt in individually: add **`strict-drizzle`**, **`strict-web`**, **`effect-observability`**, or **`anti-slop-aggressive`** after **`strict`** when only part of the stack applies.
 
 ### Tests: Vitest, Bun, and Jest
 
@@ -76,7 +79,7 @@ Example (Next frontend only):
 }
 ```
 
-Example (opt into Drizzle + Effect, no Next):
+Example (opt into Drizzle + Effect observability, no Next):
 
 ```json
 {
@@ -108,6 +111,23 @@ Example (full stack in one preset):
 
 You can also extend **`strict-drizzle`** or **`strict-web`** alone on top of **`strict`** if you are incrementally adopting rules.
 
+Example (opt into the full Effect stack without `strict-full`):
+
+```json
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"options": {
+		"typeAware": true
+	},
+	"extends": [
+		"./node_modules/@rikalabs/oxlint-standards/presets/strict.json",
+		"./node_modules/@rikalabs/oxlint-standards/presets/effect-service-hygiene.json",
+		"./node_modules/@rikalabs/oxlint-standards/presets/effect-observability.json"
+	],
+	"jsPlugins": ["@rikalabs/oxlint-standards/plugin"]
+}
+```
+
 ### Less verbose explicit returns
 
 - **`typescript-hard-mode`** enables both **`typescript/explicit-function-return-type`** and **`typescript/explicit-module-boundary-types`**. If boundary types are enough, use **`strict-ts-boundaries`** (same as `strict-ts` but **`typescript/explicit-function-return-type`** is off) or compose from **`typescript-hard-mode-boundaries-only`** when building a custom preset chain.
@@ -130,25 +150,27 @@ You can also extend **`strict-drizzle`** or **`strict-web`** alone on top of **`
 4. `imports-hygiene`
 5. `promise-safety`
 6. `naming-discipline`
-7. `effect-runtime`
-8. `effect-error-model`
-9. `effect-composition`
-10. `effect-observability`
-11. `strict-core`
-12. `strict-runtime`
-13. `strict-drizzle`
-14. `strict-web`
-15. `strict-next` (alias of `strict-web`)
-16. `strict-tests` (Vitest + jsdoc + custom test rules; no Jest plugin)
-17. `strict-tests-jest` (extends `strict-tests` with Jest plugin rules)
-18. `strict-ts` (same layers as `strict`: `strict-core` + `strict-runtime` + `strict-tests`)
-19. `strict-ts-boundaries` (like `strict-ts` but **`typescript/explicit-function-return-type`** off)
-20. `strict` (default TypeScript-only baseline; alias chain: `strict-ts`)
-21. `strict-full` (`strict-ts` + `strict-drizzle` + `strict-web` + `strict-zustand` + `strict-electrobun` + `strict-bun` + `effect-observability`)
-22. `strict-effect` (compatibility alias: extends `strict-full`)
-23. `strict-zustand` (Zustand state management guardrails)
-24. `strict-electrobun` (Electrobun desktop app boundary rules)
-25. `strict-bun` (Bun runtime-specific rules for shared package safety)
+7. `anti-slop-aggressive` (opt-in helper/fallback heuristics trimmed from the default anti-slop baseline)
+8. `effect-runtime`
+9. `effect-error-model`
+10. `effect-composition`
+11. `effect-service-hygiene`
+12. `effect-observability`
+13. `strict-core`
+14. `strict-runtime`
+15. `strict-drizzle`
+16. `strict-web`
+17. `strict-next` (alias of `strict-web`)
+18. `strict-tests` (Vitest + jsdoc + custom test rules; no Jest plugin)
+19. `strict-tests-jest` (extends `strict-tests` with Jest plugin rules)
+20. `strict-ts` (same layers as `strict`: `strict-core` + `strict-runtime` + `strict-tests`)
+21. `strict-ts-boundaries` (like `strict-ts` but **`typescript/explicit-function-return-type`** off)
+22. `strict` (default TypeScript-only baseline; alias chain: `strict-ts`)
+23. `strict-full` (`strict-ts` + `strict-drizzle` + `strict-web` + `strict-zustand` + `strict-electrobun` + `strict-bun` + `effect-service-hygiene` + `effect-observability`)
+24. `strict-effect` (compatibility alias: extends `strict-full`)
+25. `strict-zustand` (Zustand state management guardrails)
+26. `strict-electrobun` (Electrobun desktop app boundary rules)
+27. `strict-bun` (Bun runtime-specific rules for shared package safety)
 
 Also available: `recommended` (alias of `strict`), `recommended-ts` (alias of `strict`).
 
@@ -162,15 +184,12 @@ Default strict custom rules include:
 - `@rikalabs/no-is-record-helpers`
 - `@rikalabs/no-trivial-runtime-guard-helpers`
 - `@rikalabs/no-trivial-property-helpers`
-- `@rikalabs/no-single-use-trivial-helpers`
 - `@rikalabs/no-bare-wrapper-functions`
-- `@rikalabs/no-pass-through-intermediate-vars`
 - `@rikalabs/no-silent-catch-fallback`
 - `@rikalabs/no-runtime-compat-fallbacks`
 - `@rikalabs/no-catch-return-error-object`
 - `@rikalabs/no-unlisted-external-imports`
 - `@rikalabs/no-double-type-assertion`
-- `@rikalabs/no-property-default-fallbacks`
 - `@rikalabs/no-redundant-const-assertion`
 - `@rikalabs/no-ai-debt-comments`
 - `@rikalabs/no-tutorial-comments`
@@ -206,13 +225,19 @@ Default strict custom rules include:
 - `@rikalabs/no-hardcoded-secrets`
 - `@rikalabs/no-sql-string-concat`
 - `@rikalabs/no-anemic-errors`
+
+`anti-slop-aggressive` additionally adds:
+
+- `@rikalabs/no-single-use-trivial-helpers`
+- `@rikalabs/no-pass-through-intermediate-vars`
+- `@rikalabs/no-property-default-fallbacks`
  
 `strict-tests` also adds:
 
 - `@rikalabs/no-placeholder-tests`
 - `@rikalabs/no-mock-only-tests`
  
-Effect rules included when you extend **`strict-full`** or **`effect-observability`** also include:
+Effect rules included when you extend **`strict-full`** or **`effect-service-hygiene`** also include:
 
 - `@rikalabs/effect-no-or-die`
 - `@rikalabs/effect-catch-handler-must-use-error`
@@ -222,6 +247,10 @@ Effect rules included when you extend **`strict-full`** or **`effect-observabili
 - `@rikalabs/effect-no-effect-return-in-map`
 - `@rikalabs/effect-require-span-name`
 - `@rikalabs/effect-no-mutable-ref-in-gen`
+
+`effect-observability` alone adds:
+
+- `@rikalabs/effect-require-span-name`
 
 `strict-web` also adds:
 
@@ -245,9 +274,10 @@ Effect rules included when you extend **`strict-full`** or **`effect-observabili
 
 | Complaint family | Coverage |
 | --- | --- |
-| Defensive helper/type guard slop | `@rikalabs/no-is-record-helpers`, `@rikalabs/no-trivial-runtime-guard-helpers`, `@rikalabs/no-trivial-property-helpers`, `@rikalabs/no-single-use-trivial-helpers` |
-| Helper hell / indirection / intermediate vars | `@rikalabs/no-bare-wrapper-functions`, `@rikalabs/no-pass-through-intermediate-vars`, `@rikalabs/no-copy-paste-exports`, `@rikalabs/no-identical-branches` |
-| Fail-fast over fallback defaults | `@rikalabs/no-silent-catch-fallback`, `@rikalabs/no-runtime-compat-fallbacks`, `@rikalabs/no-json-parse-default-fallback`, `@rikalabs/no-json-stringify-default-fallback`, `@rikalabs/no-property-default-fallbacks` |
+| Defensive helper/type guard slop | `@rikalabs/no-is-record-helpers`, `@rikalabs/no-trivial-runtime-guard-helpers`, `@rikalabs/no-trivial-property-helpers` |
+| Helper hell / indirection / intermediate vars | `@rikalabs/no-bare-wrapper-functions`, `@rikalabs/no-copy-paste-exports`, `@rikalabs/no-identical-branches` |
+| Fail-fast over fallback defaults | `@rikalabs/no-silent-catch-fallback`, `@rikalabs/no-runtime-compat-fallbacks`, `@rikalabs/no-json-parse-default-fallback`, `@rikalabs/no-json-stringify-default-fallback` |
+| Aggressive helper/fallback heuristics | `anti-slop-aggressive`: `@rikalabs/no-single-use-trivial-helpers`, `@rikalabs/no-pass-through-intermediate-vars`, `@rikalabs/no-property-default-fallbacks` |
 | Comments / debug residue / AI narration | `@rikalabs/no-ai-debt-comments`, `@rikalabs/no-tutorial-comments`, `@rikalabs/no-commented-out-code`, `@rikalabs/no-debug-residue-filenames`, `eslint/no-warning-comments`, `eslint/no-debugger`, `eslint/no-console` |
 | TypeScript escape hatches | `typescript/no-explicit-any`, `typescript/no-non-null-assertion`, `typescript/no-unnecessary-type-assertion`, `@rikalabs/no-double-type-assertion`, `@rikalabs/no-as-never`, `@rikalabs/no-redundant-const-assertion`, `typescript/consistent-type-definitions` |
 | Naming / readability / structure | `@rikalabs/no-vague-verbs`, `@rikalabs/no-low-signal-public-names`, `@rikalabs/no-low-signal-variable-names`, `@rikalabs/no-generic-module-names`, `@rikalabs/no-standalone-classes`, `eslint/max-params`, `eslint/max-depth`, `eslint/max-lines-per-function`, `eslint/complexity`, `eslint/no-nested-ternary` |

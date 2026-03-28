@@ -6,6 +6,7 @@
 		"./strict-zustand.json",
 		"./strict-electrobun.json",
 		"./strict-bun.json",
+		"./effect-service-hygiene.json",
 		"./effect-observability.json"
 	]
 }
