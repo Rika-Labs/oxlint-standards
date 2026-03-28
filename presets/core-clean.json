@@ -29,6 +29,9 @@
 		"eslint/no-undefined": "off",
 		"eslint/sort-imports": "off",
 		"eslint/sort-keys": "off",
+		"eslint/no-extend-native": "error",
+		"eslint/no-global-assign": "error",
+		"eslint/no-implicit-globals": "error",
 		"import/no-cycle": "error",
 		"import/no-self-import": "error",
 		"import/no-duplicates": "error",
@@ -42,6 +45,7 @@
 		"typescript/prefer-readonly-parameter-types": "off",
 		"typescript/no-meaningless-void-operator": "error",
 		"typescript/no-duplicate-enum-values": "error",
+		"typescript/prefer-optional-chain": "error",
 		"promise/no-callback-in-promise": "error",
 		"promise/no-return-in-finally": "error",
 		"promise/no-multiple-resolved": "error",
@@ -61,6 +65,7 @@
 		"unicorn/no-thenable": "error",
 		"unicorn/prefer-logical-operator-over-short-circuit": "error",
 		"unicorn/no-useless-switch-case": "error",
-		"unicorn/no-useless-undefined": "error"
+		"unicorn/no-useless-undefined": "error",
+		"unicorn/no-useless-spread": "error"
 	}
 }
