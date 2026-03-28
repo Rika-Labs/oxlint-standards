@@ -1,0 +1,8 @@
+{
+	"extends": ["./anti-slop.json"],
+	"rules": {
+		"@rikalabs/no-single-use-trivial-helpers": "error",
+		"@rikalabs/no-pass-through-intermediate-vars": "error",
+		"@rikalabs/no-property-default-fallbacks": "error"
+	}
+}

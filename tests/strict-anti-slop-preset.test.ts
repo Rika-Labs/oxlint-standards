@@ -21,12 +21,13 @@ describe("strict anti-slop preset coverage", () => {
 		expect(strictCore.rules?.["unicorn/no-static-only-class"]).toBe("error");
 	});
 
-	it("ships the new TS and helper-hell rules through anti-slop", () => {
+	it("keeps anti-slop focused on the default strict baseline", () => {
 		const antiSlop = readPreset("anti-slop");
 
 		expect(antiSlop.rules?.["@rikalabs/no-trivial-runtime-guard-helpers"]).toBe("error");
 		expect(antiSlop.rules?.["@rikalabs/no-trivial-property-helpers"]).toBe("error");
 		expect(antiSlop.rules?.["@rikalabs/no-single-use-trivial-helpers"]).toBe("error");
+		expect(antiSlop.rules?.["@rikalabs/no-pass-through-intermediate-vars"]).toBe("error");
 		expect(antiSlop.rules?.["@rikalabs/no-property-default-fallbacks"]).toBe("error");
 		expect(antiSlop.rules?.["@rikalabs/no-hardcoded-secrets"]).toBe("error");
 	});
