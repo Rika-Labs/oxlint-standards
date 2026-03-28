@@ -21,5 +21,17 @@
 		"jsdoc/require-yields": "error",
 		"@rikalabs/no-placeholder-tests": "error",
 		"@rikalabs/no-mock-only-tests": "error"
-	}
+	},
+	"overrides": [
+		{
+			"files": [
+				"**/*.{test,spec}.{ts,tsx,mts,cts}",
+				"**/__tests__/**/*.{ts,tsx,mts,cts}"
+			],
+			"rules": {
+				"typescript/no-explicit-any": "off",
+				"typescript/no-unsafe-type-assertion": "off"
+			}
+		}
+	]
 }

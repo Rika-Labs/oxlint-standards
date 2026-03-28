@@ -18,7 +18,13 @@
 		],
 		"oxc/no-async-await": "off",
 		"oxc/no-accumulating-spread": "error",
+		"oxc/no-new-buffer": "error",
+		"oxc/no-map-object-keys": "error",
 		"eslint/eqeqeq": ["error", "always"],
+		"eslint/no-unused-expressions": "error",
+		"eslint/no-sequences": "error",
+		"eslint/no-unreachable": "error",
+		"eslint/no-constant-condition": "error",
 		"eslint/func-names": "off",
 		"eslint/no-undefined": "off",
 		"eslint/sort-imports": "off",
@@ -34,6 +40,8 @@
 		"import/prefer-default-export": "off",
 		"import/consistent-type-specifier-style": "off",
 		"typescript/prefer-readonly-parameter-types": "off",
+		"typescript/no-meaningless-void-operator": "error",
+		"typescript/no-duplicate-enum-values": "error",
 		"promise/no-callback-in-promise": "error",
 		"promise/no-return-in-finally": "error",
 		"promise/no-multiple-resolved": "error",
@@ -49,6 +57,10 @@
 		"unicorn/prefer-module": "error",
 		"unicorn/numeric-separators-style": "error",
 		"unicorn/prefer-structured-clone": "error",
-		"unicorn/prefer-string-replace-all": "error"
+		"unicorn/prefer-string-replace-all": "error",
+		"unicorn/no-thenable": "error",
+		"unicorn/prefer-logical-operator-over-short-circuit": "error",
+		"unicorn/no-useless-switch-case": "error",
+		"unicorn/no-useless-undefined": "error"
 	}
 }
