@@ -2,7 +2,6 @@ export { default as plugin } from "./plugin/index.js";
 
 export const presetNames = [
 	"core-clean",
-	"anti-slop-aggressive",
 	"typescript-hard-mode",
 	"imports-hygiene",
 	"promise-safety",

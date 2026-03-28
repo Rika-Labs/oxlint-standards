@@ -26,18 +26,10 @@ describe("strict anti-slop preset coverage", () => {
 
 		expect(antiSlop.rules?.["@rikalabs/no-trivial-runtime-guard-helpers"]).toBe("error");
 		expect(antiSlop.rules?.["@rikalabs/no-trivial-property-helpers"]).toBe("error");
-		expect(antiSlop.rules?.["@rikalabs/no-single-use-trivial-helpers"]).toBeUndefined();
-		expect(antiSlop.rules?.["@rikalabs/no-pass-through-intermediate-vars"]).toBeUndefined();
-		expect(antiSlop.rules?.["@rikalabs/no-property-default-fallbacks"]).toBeUndefined();
+		expect(antiSlop.rules?.["@rikalabs/no-single-use-trivial-helpers"]).toBe("error");
+		expect(antiSlop.rules?.["@rikalabs/no-pass-through-intermediate-vars"]).toBe("error");
+		expect(antiSlop.rules?.["@rikalabs/no-property-default-fallbacks"]).toBe("error");
 		expect(antiSlop.rules?.["@rikalabs/no-hardcoded-secrets"]).toBe("error");
-	});
-
-	it("ships the aggressive helper and fallback rules in anti-slop-aggressive", () => {
-		const antiSlopAggressive = readPreset("anti-slop-aggressive");
-
-		expect(antiSlopAggressive.rules?.["@rikalabs/no-single-use-trivial-helpers"]).toBe("error");
-		expect(antiSlopAggressive.rules?.["@rikalabs/no-pass-through-intermediate-vars"]).toBe("error");
-		expect(antiSlopAggressive.rules?.["@rikalabs/no-property-default-fallbacks"]).toBe("error");
 	});
 
 	it("ships test-only anti-pattern rules through strict-tests (Vitest-first)", () => {
