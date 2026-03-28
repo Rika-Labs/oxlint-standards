@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.7.0 - 2026-03-28
+
+### Breaking
+
+- **`strict-core`** no longer sets arbitrary threshold rules. Removed: `max-params`, `max-depth`, `max-lines-per-function`, `complexity`, `no-magic-numbers`, `no-await-in-loop`, `no-unnecessary-boolean-literal-compare`.
+- **`promise-safety`** disables `promise/always-return` (was "error", now "off").
+- **`anti-slop-aggressive`** preset removed; aggressive helper rules now enabled in base **`anti-slop`** preset.
+
+### Added
+
+- **49 new high-value bug-catching rules** across presets:
+  - **Dead code elimination:** `no-unused-expressions`, `no-sequences`, `no-unreachable`, `no-constant-condition`
+  - **Security:** `no-script-url`, `no-document-cookie`, `no-extend-native`, `no-global-assign`, `no-implicit-globals`
+  - **Logic bugs:** `use-isnan`, `no-compare-neg-zero`, `no-case-declarations`, `no-fallthrough`, `default-case`, `no-unsafe-finally`, `no-prototype-builtins`, `no-void`
+  - **TypeScript strictness:** `no-misused-new`, `no-non-null-asserted-optional-chain`, `strict-boolean-expressions`, `no-unsafe-declaration-merging`, `no-unnecessary-qualifier`, `no-meaningless-void-operator`, `no-duplicate-enum-values`, `prefer-optional-chain`
+  - **Import integrity:** `no-extraneous-dependencies`, `no-unresolved`
+  - **Modern patterns:** `no-thenable`, `prefer-logical-operator-over-short-circuit`, `no-useless-switch-case`, `no-useless-undefined`, `no-useless-spread`, `new-for-builtins`, `no-instanceof-builtins`, `no-invalid-remove-event-listener`, `no-object-as-default-parameter`, `no-useless-fallback-in-spread`, `no-map-object-keys`, `no-new-buffer`, `no-accumulating-spread`
+  - **ESLint hygiene:** `no-useless-catch`, `no-empty-function`, `no-unused-expressions`
+  - **Web/a11y:** `no-interactive-element-to-noninteractive-role`
+  - **TypeScript type-aware:** `no-unnecessary-condition`, `prefer-nullish-coalescing`, `require-await` (in `typescript-hard-mode`)
+- **`strict-tests`** now allows `any` and `as` assertions in test files via override.
+
+### Changed
+
+- **`strict-core`** removes all file-scoped overrides that referenced removed threshold rules.
+- **`anti-slop`** preset now includes `no-single-use-trivial-helpers`, `no-pass-through-intermediate-vars`, `no-property-default-fallbacks`.
+
 ## 0.6.0 - 2026-03-24
 
 ### Changed
