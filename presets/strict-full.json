@@ -8,5 +8,11 @@
 		"./strict-bun.json",
 		"./effect-service-hygiene.json",
 		"./effect-observability.json"
-	]
+	],
+	"rules": {
+		"typescript/explicit-function-return-type": "off",
+		"typescript/explicit-module-boundary-types": "off",
+		"eslint/no-void": "off",
+		"unicorn/no-useless-undefined": "off"
+	}
 }

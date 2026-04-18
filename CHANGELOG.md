@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.8.1 - 2026-04-18
+
+### Fixed
+
+- **`strict-ts`** now carries the default relaxations that must win after preset composition: `typescript/explicit-function-return-type`, `typescript/explicit-module-boundary-types`, `eslint/no-void`, and `unicorn/no-useless-undefined` are off in the merged `strict` / `strict-full` config.
+
 ## 0.8.0 - 2026-04-18
 
 ### Changed

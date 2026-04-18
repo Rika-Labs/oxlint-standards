@@ -1,3 +1,9 @@
 {
-	"extends": ["./strict-core.json", "./strict-runtime.json", "./strict-tests.json"]
+	"extends": ["./strict-core.json", "./strict-runtime.json", "./strict-tests.json"],
+	"rules": {
+		"typescript/explicit-function-return-type": "off",
+		"typescript/explicit-module-boundary-types": "off",
+		"eslint/no-void": "off",
+		"unicorn/no-useless-undefined": "off"
+	}
 }

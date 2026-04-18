@@ -140,6 +140,10 @@ describe("preset boundaries", () => {
 			"./effect-service-hygiene.json",
 			"./effect-observability.json",
 		]);
+		expect(full.rules?.["typescript/explicit-function-return-type"]).toBe("off");
+		expect(full.rules?.["typescript/explicit-module-boundary-types"]).toBe("off");
+		expect(full.rules?.["eslint/no-void"]).toBe("off");
+		expect(full.rules?.["unicorn/no-useless-undefined"]).toBe("off");
 	});
 
 	it("anti-slop-aggressive extends anti-slop with the trimmed heuristics", () => {
@@ -154,8 +158,6 @@ describe("preset boundaries", () => {
 	it("strict-core carries the default style and threshold relaxations", () => {
 		const strictCore = readPreset("strict-core");
 
-		expect(strictCore.rules?.["typescript/explicit-function-return-type"]).toBe("off");
-		expect(strictCore.rules?.["typescript/explicit-module-boundary-types"]).toBe("off");
 		expect(strictCore.rules?.["eslint/no-ternary"]).toBe("off");
 		expect(strictCore.rules?.["eslint/prefer-object-spread"]).toBe("off");
 		expect(strictCore.rules?.["eslint/max-lines-per-function"]).toEqual([
@@ -170,6 +172,15 @@ describe("preset boundaries", () => {
 		expect(strictCore.rules?.["oxc/no-optional-chaining"]).toBe("off");
 		expect(strictCore.rules?.["oxc/no-rest-spread-properties"]).toBe("off");
 		expect(strictCore.rules?.["oxc/no-map-spread"]).toBe("off");
+	});
+
+	it("strict-ts applies the default TypeScript and runtime relaxations on top of strict-core", () => {
+		const strictTs = readPreset("strict-ts");
+
+		expect(strictTs.rules?.["typescript/explicit-function-return-type"]).toBe("off");
+		expect(strictTs.rules?.["typescript/explicit-module-boundary-types"]).toBe("off");
+		expect(strictTs.rules?.["eslint/no-void"]).toBe("off");
+		expect(strictTs.rules?.["unicorn/no-useless-undefined"]).toBe("off");
 	});
 
 	it("strict-tests keeps jsdoc focused on useful metadata, not boilerplate tags", () => {

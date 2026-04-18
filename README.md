@@ -144,6 +144,8 @@ Example (opt into the full Effect stack without `strict-full`):
 
 `strict-core` also keeps a small style-noise off-list for the default baseline: `eslint/no-ternary`, `eslint/no-continue`, `eslint/no-negated-condition`, `eslint/id-length`, `eslint/max-statements`, `eslint/new-cap`, `eslint/prefer-object-spread`, `unicorn/no-useless-undefined`, `oxc/no-optional-chaining`, `oxc/no-rest-spread-properties`, and `oxc/no-map-spread`.
 
+At the `strict` / `strict-ts` layer, the default TypeScript-oriented baseline also turns off `typescript/explicit-function-return-type`, `typescript/explicit-module-boundary-types`, and `eslint/no-void`.
+
 ## Presets
 
 1. `core-clean`
