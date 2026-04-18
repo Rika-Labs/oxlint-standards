@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.8.0 - 2026-04-18
+
+### Changed
+
+- **`strict-core`** now matches the production default style policy: `explicit-function-return-type`, `explicit-module-boundary-types`, `no-ternary`, `no-continue`, `no-negated-condition`, `id-length`, `max-statements`, `new-cap`, `prefer-object-spread`, `no-useless-undefined`, `no-optional-chaining`, `no-rest-spread-properties`, and `no-map-spread` are off by default.
+- **`strict-core`** restores default repository-size guardrails: `max-lines-per-function` = `60`, `max-classes-per-file` = `1`, `max-lines` = `1500`.
+- **`imports-hygiene`** raises `import/max-dependencies` from `15` to `35`.
+- **`promise-safety`** disables `typescript/promise-function-async`, `typescript/return-await`, and `promise/prefer-await-to-then`.
+- **`strict-tests`** keeps JSDoc checks focused on meaningful metadata and disables boilerplate tag requirements (`no-defaults`, `require-param*`, `require-returns*`).
+- **`strict-web`** disables `react/no-multi-comp`, `react/jsx-max-depth`, `react/jsx-props-no-spreading`, `react-perf/jsx-no-new-function-as-prop`, and `react-perf/jsx-no-new-object-as-prop`.
+- **`effect-runtime`** no longer enables `@rikalabs/effect-no-raw-promises` by default.
+- **`anti-slop`** keeps `no-pass-through-intermediate-vars` in the default baseline, while `anti-slop-aggressive` remains the opt-in home for `no-single-use-trivial-helpers` and `no-property-default-fallbacks`.
+
 ## 0.7.0 - 2026-03-28
 
 ### Breaking

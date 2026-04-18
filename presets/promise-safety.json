@@ -8,7 +8,8 @@
 		"promise/catch-or-return": "error",
 		"promise/always-return": "off",
 		"typescript/no-floating-promises": "error",
-		"typescript/promise-function-async": "error",
-		"typescript/return-await": ["error", "in-try-catch"]
+		"typescript/promise-function-async": "off",
+		"typescript/return-await": "off",
+		"promise/prefer-await-to-then": "off"
 	}
 }

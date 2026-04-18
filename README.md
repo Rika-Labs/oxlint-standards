@@ -54,7 +54,7 @@ Use [**@oxlint/migrate**](https://github.com/oxc-project/oxlint-migrate) to tran
 - **`strict-effect`** extends **`strict-full`** (same rules as **`strict-full`** in one preset name).
 - **`effect-observability`** is observability-only: it currently enforces span naming without bringing in the broader Effect runtime/service doctrine.
 - For the broader Effect stack, add **`effect-service-hygiene`** (which pulls in the runtime/composition/error-model chain) alongside **`effect-observability`**, or use **`strict-full`** / **`strict-effect`**.
-- **`anti-slop-aggressive`** is an opt-in extension for the more taste-heavy helper/fallback heuristics that are no longer part of the default anti-slop baseline.
+- **`anti-slop-aggressive`** is an opt-in extension for the more taste-heavy helper/fallback heuristics that stay out of the default anti-slop baseline.
 - Opt in individually: add **`strict-drizzle`**, **`strict-web`**, **`effect-observability`**, or **`anti-slop-aggressive`** after **`strict`** when only part of the stack applies.
 
 ### Tests: Vitest, Bun, and Jest
@@ -132,15 +132,17 @@ Example (opt into the full Effect stack without `strict-full`):
 
 - **`typescript-hard-mode`** enables both **`typescript/explicit-function-return-type`** and **`typescript/explicit-module-boundary-types`**. If boundary types are enough, use **`strict-ts-boundaries`** (same as `strict-ts` but **`typescript/explicit-function-return-type`** is off) or compose from **`typescript-hard-mode-boundaries-only`** when building a custom preset chain.
 
-### Threshold overrides (in `strict-core`)
+### Default threshold policy (in `strict-core`)
 
-`strict-core` applies file-scoped **overrides** to reduce noise without dropping rules globally:
+`strict-core` keeps the broader threshold family mostly off, but it does enforce a few repository-shaping caps by default:
 
-| Area | Globs | What changes |
-| --- | --- | --- |
-| Tests | `**/*.{test,spec}.{ts,tsx,mts,cts}`, `**/__tests__/**/*` | `eslint/no-magic-numbers` off; `max-lines-per-function` max 120; `complexity` max 20 |
-| Scripts and config | `**/scripts/**`, `**/*.config.*`, `**/tools/**` | `eslint/no-console` off |
-| UI trees | `**/components/**`, `**/app/**` (jsx/tsx) | `max-lines-per-function` max 120; `complexity` max 15 |
+| Rule | Default |
+| --- | --- |
+| `eslint/max-lines-per-function` | `60` (`skipBlankLines`, `skipComments`) |
+| `eslint/max-classes-per-file` | `1` |
+| `eslint/max-lines` | `1500` (`skipBlankLines`, `skipComments`) |
+
+`strict-core` also keeps a small style-noise off-list for the default baseline: `eslint/no-ternary`, `eslint/no-continue`, `eslint/no-negated-condition`, `eslint/id-length`, `eslint/max-statements`, `eslint/new-cap`, `eslint/prefer-object-spread`, `unicorn/no-useless-undefined`, `oxc/no-optional-chaining`, `oxc/no-rest-spread-properties`, and `oxc/no-map-spread`.
 
 ## Presets
 
@@ -229,8 +231,11 @@ Default strict custom rules include:
 `anti-slop-aggressive` additionally adds:
 
 - `@rikalabs/no-single-use-trivial-helpers`
-- `@rikalabs/no-pass-through-intermediate-vars`
 - `@rikalabs/no-property-default-fallbacks`
+
+The default anti-slop baseline still includes:
+
+- `@rikalabs/no-pass-through-intermediate-vars`
  
 `strict-tests` also adds:
 

@@ -151,6 +151,53 @@ describe("preset boundaries", () => {
 		expect(aggressive.rules?.["@rikalabs/no-property-default-fallbacks"]).toBe("error");
 	});
 
+	it("strict-core carries the default style and threshold relaxations", () => {
+		const strictCore = readPreset("strict-core");
+
+		expect(strictCore.rules?.["typescript/explicit-function-return-type"]).toBe("off");
+		expect(strictCore.rules?.["typescript/explicit-module-boundary-types"]).toBe("off");
+		expect(strictCore.rules?.["eslint/no-ternary"]).toBe("off");
+		expect(strictCore.rules?.["eslint/prefer-object-spread"]).toBe("off");
+		expect(strictCore.rules?.["eslint/max-lines-per-function"]).toEqual([
+			"error",
+			{ max: 60, skipBlankLines: true, skipComments: true },
+		]);
+		expect(strictCore.rules?.["eslint/max-classes-per-file"]).toEqual(["error", 1]);
+		expect(strictCore.rules?.["eslint/max-lines"]).toEqual([
+			"error",
+			{ max: 1500, skipBlankLines: true, skipComments: true },
+		]);
+		expect(strictCore.rules?.["oxc/no-optional-chaining"]).toBe("off");
+		expect(strictCore.rules?.["oxc/no-rest-spread-properties"]).toBe("off");
+		expect(strictCore.rules?.["oxc/no-map-spread"]).toBe("off");
+	});
+
+	it("strict-tests keeps jsdoc focused on useful metadata, not boilerplate tags", () => {
+		const t = readPreset("strict-tests");
+
+		expect(t.rules?.["jsdoc/no-defaults"]).toBe("off");
+		expect(t.rules?.["jsdoc/require-param"]).toBe("off");
+		expect(t.rules?.["jsdoc/require-param-type"]).toBe("off");
+		expect(t.rules?.["jsdoc/require-returns"]).toBe("off");
+		expect(t.rules?.["jsdoc/require-returns-type"]).toBe("off");
+	});
+
+	it("strict-web relaxes multi-component and prop-construction noise", () => {
+		const web = readPreset("strict-web");
+
+		expect(web.rules?.["react/no-multi-comp"]).toBe("off");
+		expect(web.rules?.["react/jsx-max-depth"]).toBe("off");
+		expect(web.rules?.["react/jsx-props-no-spreading"]).toBe("off");
+		expect(web.rules?.["react-perf/jsx-no-new-function-as-prop"]).toBe("off");
+		expect(web.rules?.["react-perf/jsx-no-new-object-as-prop"]).toBe("off");
+	});
+
+	it("effect-runtime leaves raw promises to the consumer boundary policy", () => {
+		const effectRuntime = readPreset("effect-runtime");
+
+		expect(effectRuntime.rules?.["@rikalabs/effect-no-raw-promises"]).toBe("off");
+	});
+
 	it("strict-ts-boundaries turns off explicit-function-return-type", () => {
 		const boundaries = readPreset("strict-ts-boundaries");
 

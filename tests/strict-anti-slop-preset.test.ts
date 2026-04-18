@@ -26,9 +26,9 @@ describe("strict anti-slop preset coverage", () => {
 
 		expect(antiSlop.rules?.["@rikalabs/no-trivial-runtime-guard-helpers"]).toBe("error");
 		expect(antiSlop.rules?.["@rikalabs/no-trivial-property-helpers"]).toBe("error");
-		expect(antiSlop.rules?.["@rikalabs/no-single-use-trivial-helpers"]).toBe("error");
 		expect(antiSlop.rules?.["@rikalabs/no-pass-through-intermediate-vars"]).toBe("error");
-		expect(antiSlop.rules?.["@rikalabs/no-property-default-fallbacks"]).toBe("error");
+		expect(antiSlop.rules?.["@rikalabs/no-single-use-trivial-helpers"]).toBeUndefined();
+		expect(antiSlop.rules?.["@rikalabs/no-property-default-fallbacks"]).toBeUndefined();
 		expect(antiSlop.rules?.["@rikalabs/no-hardcoded-secrets"]).toBe("error");
 	});
 
